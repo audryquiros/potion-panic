@@ -30,17 +30,17 @@ function Ingredient({
   };
 
   if (isCollecting && flyDistance) {
-    style["--center-x"] =
-      `${flyDistance.centerX}px`;
+    style["--flight-start-x"] =
+      `${flyDistance.startX}px`;
 
-    style["--center-y"] =
-      `${flyDistance.centerY}px`;
+    style["--flight-start-y"] =
+      `${flyDistance.startY}px`;
 
-    style["--cauldron-x"] =
-      `${flyDistance.cauldronX}px`;
+    style["--delta-x"] =
+      `${flyDistance.deltaX}px`;
 
-    style["--cauldron-y"] =
-      `${flyDistance.cauldronY}px`;
+    style["--delta-y"] =
+      `${flyDistance.deltaY}px`;
   }
 
   return (

@@ -16,45 +16,56 @@ const CONFIGURACION_NIVELES = {
   1: {
     tiempo: 35,
     vidas: 3,
-    ingredientesVolando: 7
+    ingredientesVolando: 9
   },
   2: {
     tiempo: 30,
     vidas: 3,
-    ingredientesVolando: 8
+    ingredientesVolando: 12
   },
   3: {
     tiempo: 27,
     vidas: 3,
-    ingredientesVolando: 9
+    ingredientesVolando: 15
   },
   4: {
     tiempo: 24,
     vidas: 2,
-    ingredientesVolando: 11
+    ingredientesVolando: 18
   },
   5: {
     tiempo: 20,
     vidas: 2,
-    ingredientesVolando: 15
+    ingredientesVolando: 21
   }
 };
 
 const POSICIONES_INGREDIENTES = [
-  { top: "8%", left: "8%" },
-  { top: "10%", left: "30%" },
+  { top: "6%", left: "13%" },
+  { top: "7%", left: "27%" },
+  { top: "6%", left: "41%" },
   { top: "8%", left: "55%" },
-  { top: "11%", left: "78%" },
-  { top: "23%", left: "17%" },
-  { top: "21%", left: "41%" },
-  { top: "24%", left: "67%" },
-  { top: "28%", left: "87%" },
-  { top: "34%", left: "9%" },
-  { top: "32%", left: "31%" },
-  { top: "35%", left: "54%" },
-  { top: "36%", left: "77%" },
-  { top: "26%", left: "91%" },
-  { top: "38%", left: "20%" }
+  { top: "7%", left: "69%" },
+
+  { top: "19%", left: "13%" },
+  { top: "21%", left: "27%" },
+  { top: "18%", left: "41%" },
+  { top: "22%", left: "55%" },
+  { top: "20%", left: "69%" },
+
+  { top: "32%", left: "13%" },
+  { top: "34%", left: "27%" },
+  { top: "31%", left: "41%" },
+  { top: "35%", left: "55%" },
+  { top: "33%", left: "69%" },
+
+  { top: "45%", left: "13%" },
+  { top: "43%", left: "27%" },
+  { top: "47%", left: "41%" },
+  { top: "44%", left: "55%" },
+  { top: "46%", left: "69%" },
+
+  { top: "26%", left: "48%" }
 ];
 
 const PATRONES_MOVIMIENTO = [
@@ -214,12 +225,12 @@ function Game() {
    */
   const movementScaleNivel =
     {
-      1: 0.78,
-      2: 0.92,
-      3: 1.06,
-      4: 1.2,
-      5: 1.34
-    }[nivelNumero] || 0.78;
+      1: 0.92,
+      2: 0.98,
+      3: 1.04,
+      4: 1.10,
+      5: 1.16
+    }[nivelNumero] || 0.92;
 
   const movementScaleReceta =
     [1, 1.12, 1.24][indiceReceta] ||
@@ -228,7 +239,7 @@ function Game() {
   const movementScale = Math.min(
     movementScaleNivel *
       movementScaleReceta,
-    1.6
+    1.25
   );
 
   const movementSpeedNivel =
@@ -621,35 +632,43 @@ function Game() {
       const boardRect =
         boardElement.getBoundingClientRect();
 
-      const centerX =
-        ingredientRect.left +
-        ingredientRect.width / 2 -
-        boardRect.left;
+      const startX =
+        ingredientRect.left;
 
-      const centerY =
-        ingredientRect.top +
-        ingredientRect.height / 2 -
-        boardRect.top;
-
-      const cauldronX =
-        cauldronRect.left +
-        cauldronRect.width / 2 -
-        boardRect.left;
+      const startY =
+        ingredientRect.top;
 
       /*
-       * Apuntamos hacia la parte superior
-       * del caldero, donde está el líquido.
+       * Calculamos el punto exacto donde
+       * el centro del ingrediente debe llegar.
+       *
+       * Usamos coordenadas de viewport porque
+       * durante el vuelo el ingrediente pasa
+       * temporalmente a position: fixed.
        */
-      const cauldronY =
+      const targetX =
+        cauldronRect.left +
+        cauldronRect.width / 2 -
+        ingredientRect.width / 2;
+
+      const targetY =
         cauldronRect.top +
         cauldronRect.height * 0.28 -
-        boardRect.top;
+        ingredientRect.height / 2;
+
+      const deltaX =
+        targetX - startX;
+
+      const deltaY =
+        targetY - startY;
 
       setFlyDistance({
-        centerX,
-        centerY,
-        cauldronX,
-        cauldronY
+        startX,
+        startY,
+        targetX,
+        targetY,
+        deltaX,
+        deltaY
       });
     }
 
@@ -787,10 +806,10 @@ function Game() {
 
         setIngredientesRecogidos([]);
 
-        setTiempo(
-          configuracion.tiempo
-        );
-
+        /*
+         * El tiempo pertenece al nivel completo.
+         * No se reinicia al cambiar de receta.
+         */
         setEstadoJuego(
           "jugando"
         );
