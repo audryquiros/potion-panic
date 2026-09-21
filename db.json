@@ -1,7 +1,7 @@
 {
   "ingredientes": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Hongo Lunar",
       "imagen": "/assets/ingredients/mushroom.png",
       "velocidad": 1,
@@ -9,7 +9,7 @@
       "peligroso": false
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Hierba Arcana",
       "imagen": "/assets/ingredients/herb.png",
       "velocidad": 1,
@@ -17,7 +17,7 @@
       "peligroso": false
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Cristal Mágico",
       "imagen": "/assets/ingredients/crystal.png",
       "velocidad": 2,
@@ -25,7 +25,7 @@
       "peligroso": false
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Flor Nocturna",
       "imagen": "/assets/ingredients/flower.png",
       "velocidad": 1,
@@ -33,7 +33,7 @@
       "peligroso": false
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Polvo Lunar",
       "imagen": "/assets/ingredients/moon-dust.png",
       "velocidad": 2,
@@ -41,65 +41,237 @@
       "peligroso": false
     },
     {
-      "id": 6,
+      "id": "6",
       "nombre": "Frasco de Veneno",
       "imagen": "/assets/ingredients/poison.png",
       "velocidad": 3,
       "puntos": 0,
       "peligroso": true
+    },
+    {
+      "id": "7",
+      "nombre": "Raíz Sombría",
+      "imagen": "/assets/ingredients/shadow-root.png",
+      "velocidad": 1.5,
+      "puntos": 15,
+      "peligroso": false
+    },
+    {
+      "id": "8",
+      "nombre": "Escama de Dragón",
+      "imagen": "/assets/ingredients/dragon-scale.png",
+      "velocidad": 2.5,
+      "puntos": 35,
+      "peligroso": false
     }
   ],
   "recetas": [
     {
-      "id": 1,
-      "nombre": "Poción de Velocidad",
+      "id": "1",
       "nivel": 1,
-      "tiempo": 35,
-      "puntos": 100,
-      "vidas": 3,
-      "velocidad": 1,
-      "ingredientes": [1, 2, 3]
+      "orden": 1,
+      "nombre": "Poción de Velocidad",
+      "ingredientes": [
+        1,
+        2,
+        3
+      ]
     },
     {
-      "id": 2,
-      "nombre": "Poción de Invisibilidad",
+      "id": "2",
+      "nivel": 1,
+      "orden": 2,
+      "nombre": "Poción de Energía",
+      "ingredientes": [
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "3",
+      "nivel": 1,
+      "orden": 3,
+      "nombre": "Poción de Claridad",
+      "ingredientes": [
+        1,
+        4,
+        7
+      ]
+    },
+    {
+      "id": "4",
       "nivel": 2,
-      "tiempo": 30,
-      "puntos": 120,
-      "vidas": 3,
-      "velocidad": 1.3,
-      "ingredientes": [1, 4, 5]
+      "orden": 1,
+      "nombre": "Poción de Invisibilidad",
+      "ingredientes": [
+        1,
+        3,
+        4,
+        5
+      ]
     },
     {
-      "id": 3,
-      "nombre": "Poción de Curación",
+      "id": "5",
+      "nivel": 2,
+      "orden": 2,
+      "nombre": "Poción de Protección",
+      "ingredientes": [
+        2,
+        3,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "6",
+      "nivel": 2,
+      "orden": 3,
+      "nombre": "Poción de Agilidad",
+      "ingredientes": [
+        1,
+        2,
+        5,
+        8
+      ]
+    },
+    {
+      "id": "7",
       "nivel": 3,
-      "tiempo": 27,
-      "puntos": 150,
-      "vidas": 3,
-      "velocidad": 1.7,
-      "ingredientes": [2, 3, 4, 5]
+      "orden": 1,
+      "nombre": "Poción de Curación",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     {
-      "id": 4,
-      "nombre": "Poción de Maestría",
+      "id": "8",
+      "nivel": 3,
+      "orden": 2,
+      "nombre": "Poción de Resistencia",
+      "ingredientes": [
+        2,
+        3,
+        4,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "9",
+      "nivel": 3,
+      "orden": 3,
+      "nombre": "Poción de Visión Nocturna",
+      "ingredientes": [
+        1,
+        4,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "10",
       "nivel": 4,
-      "tiempo": 24,
-      "puntos": 200,
-      "vidas": 2,
-      "velocidad": 2.2,
-      "ingredientes": [1, 3, 4, 5]
+      "orden": 1,
+      "nombre": "Poción de Maestría",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
     },
     {
-      "id": 5,
-      "nombre": "Poción del Maestro",
+      "id": "11",
+      "nivel": 4,
+      "orden": 2,
+      "nombre": "Poción de Poder Arcano",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "12",
+      "nivel": 4,
+      "orden": 3,
+      "nombre": "Poción del Guardián",
+      "ingredientes": [
+        1,
+        3,
+        4,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "13",
       "nivel": 5,
-      "tiempo": 20,
-      "puntos": 250,
-      "vidas": 2,
-      "velocidad": 2.8,
-      "ingredientes": [1, 2, 3, 4, 5]
+      "orden": 1,
+      "nombre": "Elixir Supremo",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "14",
+      "nivel": 5,
+      "orden": 2,
+      "nombre": "Poción del Archimago",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "15",
+      "nivel": 5,
+      "orden": 3,
+      "nombre": "Elixir de la Eternidad",
+      "ingredientes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ]
     }
   ],
-  "puntajes": []
+  "puntajes": [
+    {
+      "nombre": "Audry",
+      "puntos": 0,
+      "nivel": 1,
+      "nivelesCompletados": 0,
+      "resultado": "derrota",
+      "fecha": "2026-09-21T16:18:43.349Z",
+      "id": "-fm9BkgGsxs"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

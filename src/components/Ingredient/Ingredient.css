@@ -1,15 +1,11 @@
 .floating-ingredient {
   position: absolute;
   z-index: 5;
-
   width: 62px;
   height: 62px;
-
   padding: 0;
-
   border: 0;
   background: transparent;
-
   cursor: pointer;
 }
 
@@ -17,13 +13,24 @@
   filter: brightness(1.15);
 }
 
+.floating-ingredient:focus-visible {
+  outline: 2px solid #9b7ede;
+  outline-offset: 4px;
+}
+
+.ingredient-flight {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .ingredient-visual {
   width: 62px;
   height: 62px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   border: 1px solid #6b5c80;
   border-radius: 18px;
@@ -49,14 +56,12 @@
     0 0 18px rgba(155, 126, 222, 0.25);
 }
 
-.floating-ingredient:focus-visible {
-  outline: 2px solid #9b7ede;
-  outline-offset: 4px;
-}
 
-/* =================================
+/* =====================================================
    MOVIMIENTO DE LOS INGREDIENTES
-================================= */
+   Cada ingrediente utiliza una zona diferente
+   para reducir cruces y superposiciones.
+   ===================================================== */
 
 .ingredient-motion-0 {
   animation:
@@ -106,7 +111,11 @@
     infinite alternate;
 }
 
-/* Movimiento 1 */
+
+/* =====================================================
+   TRAYECTORIA 1
+   Zona superior izquierda
+   ===================================================== */
 
 @keyframes ingredientFloat0 {
   0% {
@@ -114,15 +123,19 @@
   }
 
   50% {
-    transform: translate(55px, 35px);
+    transform: translate(45px, 20px);
   }
 
   100% {
-    transform: translate(-25px, 75px);
+    transform: translate(20px, 65px);
   }
 }
 
-/* Movimiento 2 */
+
+/* =====================================================
+   TRAYECTORIA 2
+   Zona central izquierda
+   ===================================================== */
 
 @keyframes ingredientFloat1 {
   0% {
@@ -130,15 +143,19 @@
   }
 
   50% {
-    transform: translate(-65px, 50px);
+    transform: translate(-45px, 25px);
   }
 
   100% {
-    transform: translate(35px, 90px);
+    transform: translate(-15px, 70px);
   }
 }
 
-/* Movimiento 3 */
+
+/* =====================================================
+   TRAYECTORIA 3
+   Zona superior derecha
+   ===================================================== */
 
 @keyframes ingredientFloat2 {
   0% {
@@ -146,15 +163,19 @@
   }
 
   50% {
-    transform: translate(-45px, -40px);
+    transform: translate(-45px, 25px);
   }
 
   100% {
-    transform: translate(70px, 45px);
+    transform: translate(-65px, 70px);
   }
 }
 
-/* Movimiento 4 */
+
+/* =====================================================
+   TRAYECTORIA 4
+   Zona media izquierda
+   ===================================================== */
 
 @keyframes ingredientFloat3 {
   0% {
@@ -162,15 +183,19 @@
   }
 
   50% {
-    transform: translate(60px, -55px);
+    transform: translate(45px, -25px);
   }
 
   100% {
-    transform: translate(-40px, -25px);
+    transform: translate(30px, -65px);
   }
 }
 
-/* Movimiento 5 */
+
+/* =====================================================
+   TRAYECTORIA 5
+   Zona media derecha
+   ===================================================== */
 
 @keyframes ingredientFloat4 {
   0% {
@@ -178,15 +203,19 @@
   }
 
   50% {
-    transform: translate(-70px, -30px);
+    transform: translate(-40px, -25px);
   }
 
   100% {
-    transform: translate(45px, 60px);
+    transform: translate(-20px, -70px);
   }
 }
 
-/* Movimiento 6 */
+
+/* =====================================================
+   TRAYECTORIA 6
+   Zona inferior / central
+   ===================================================== */
 
 @keyframes ingredientFloat5 {
   0% {
@@ -194,26 +223,42 @@
   }
 
   50% {
-    transform: translate(80px, 40px);
+    transform: translate(35px, 25px);
   }
 
   100% {
-    transform: translate(-60px, -55px);
+    transform: translate(15px, 65px);
   }
 }
 
-/* =================================
-   ANIMACIÓN HACIA EL CALDERO
-================================= */
+
+/* =====================================================
+   RECOLECCIÓN
+   ===================================================== */
 
 .ingredient-collecting {
+  z-index: 100;
   pointer-events: none;
+  cursor: default;
+
+  /*
+   Detenemos el movimiento normal.
+   El vuelo se controla desde
+   .ingredient-flight.
+  */
+  animation: none;
+}
+
+.ingredient-collecting .ingredient-flight {
+  display: block;
 
   animation:
     ingredientMove
     1.2s
     cubic-bezier(0.45, 0, 0.25, 1)
     forwards;
+
+  will-change: transform, opacity;
 }
 
 .ingredient-collecting .ingredient-visual {
@@ -226,9 +271,14 @@
   box-shadow:
     0 0 20px rgba(155, 126, 222, 0.6),
     0 0 40px rgba(155, 126, 222, 0.3);
+
+  will-change: transform;
 }
 
-/* Movimiento hacia el centro y caldero */
+
+/* =====================================================
+   VUELO HACIA EL CENTRO Y DESPUÉS AL CALDERO
+   ===================================================== */
 
 @keyframes ingredientMove {
   0% {
@@ -236,6 +286,9 @@
     opacity: 1;
   }
 
+  /*
+   Primero llega al centro.
+  */
   45% {
     transform:
       translate(
@@ -245,6 +298,9 @@
     opacity: 1;
   }
 
+  /*
+   Pequeña pausa en el centro.
+  */
   55% {
     transform:
       translate(
@@ -254,6 +310,9 @@
     opacity: 1;
   }
 
+  /*
+   Finalmente baja hacia el caldero.
+  */
   100% {
     transform:
       translate(
@@ -270,7 +329,10 @@
   }
 }
 
-/* Reducción independiente */
+
+/* =====================================================
+   REDUCCIÓN DEL INGREDIENTE
+   ===================================================== */
 
 @keyframes ingredientShrink {
   0% {
@@ -297,6 +359,54 @@
     transform: scale(0.12);
   }
 }
+
+.ingredient-motion-6 {
+  animation:
+    ingredientFloat6
+    var(--movement-speed)
+    ease-in-out
+    infinite alternate;
+}
+
+.ingredient-motion-7 {
+  animation:
+    ingredientFloat7
+    var(--movement-speed)
+    ease-in-out
+    infinite alternate;
+}
+
+@keyframes ingredientFloat6 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-110px, 65px);
+  }
+
+  100% {
+    transform: translate(70px, -80px);
+  }
+}
+
+@keyframes ingredientFloat7 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(100px, -65px);
+  }
+
+  100% {
+    transform: translate(-80px, 90px);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
 
 @media (max-width: 550px) {
   .floating-ingredient,

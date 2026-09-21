@@ -1,6 +1,15 @@
 .game-page {
-  min-height: 100vh;
-  padding: 32px;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+
+  padding: 20px 32px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
   background:
     radial-gradient(
       circle at top left,
@@ -8,25 +17,38 @@
       transparent 35%
     ),
     #100d17;
+
   color: #f3eef8;
 }
 
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
 .game-header {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto 28px;
+
+  margin: 0 auto 14px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   gap: 20px;
+
+  flex-shrink: 0;
 }
 
 .game-eyebrow {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
 
   color: #9b7ede;
-  font-size: 0.8rem;
+
+  font-size: 0.76rem;
   font-weight: 700;
+
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -34,8 +56,11 @@
 .game-header h1 {
   margin: 0;
 
-  font-size: clamp(2rem, 4vw, 3rem);
+  color: #f3eef8;
+
+  font-size: clamp(2rem, 3vw, 2.7rem);
   font-weight: 700;
+
   letter-spacing: -0.04em;
 }
 
@@ -44,17 +69,19 @@
   align-items: center;
   justify-content: center;
 
-  min-height: 42px;
-  padding: 0 18px;
+  min-height: 40px;
+
+  padding: 0 17px;
 
   border: 1px solid #51435f;
-  border-radius: 12px;
+  border-radius: 11px;
 
   background: #1d1825;
   color: #ddd1eb;
 
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 600;
+
   text-decoration: none;
 
   transition:
@@ -66,110 +93,243 @@
 .game-back-button:hover {
   background: #282032;
   border-color: #806a99;
+
   transform: translateY(-2px);
 }
 
+
+/* =====================================================
+   RECETA
+   ===================================================== */
+
 .recipe-panel {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto 20px;
 
-  display: flex;
-  justify-content: space-between;
+  margin: 0 auto 12px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 0.75fr)
+    minmax(400px, 1.25fr);
+
   align-items: center;
-  gap: 30px;
 
-  padding: 24px;
+  gap: 24px;
+
+  padding: 16px 20px;
 
   border: 1px solid #342b40;
-  border-radius: 20px;
+  border-radius: 18px;
 
-  background: rgba(29, 24, 37, 0.88);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+  background:
+    rgba(29, 24, 37, 0.88);
+
+  box-shadow:
+    0 14px 40px
+    rgba(0, 0, 0, 0.16);
+
+  flex-shrink: 0;
+}
+
+.recipe-info {
+  min-width: 0;
 }
 
 .recipe-label,
 .board-label {
   display: block;
 
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 
   color: #8d7c9f;
-  font-size: 0.72rem;
+
+  font-size: 0.68rem;
   font-weight: 700;
+
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .recipe-panel h2 {
-  margin: 0 0 8px;
+  margin: 0 0 5px;
 
   color: #f3eef8;
-  font-size: 1.45rem;
+
+  font-size: 1.28rem;
 }
 
 .recipe-panel p {
-  max-width: 600px;
+  max-width: 520px;
+
   margin: 0;
 
   color: #a99db5;
-  font-size: 0.92rem;
-  line-height: 1.6;
+
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   PROGRESO
+   ===================================================== */
+
+.recipe-progress {
+  width: fit-content;
+
+  margin-top: 10px;
+
+  padding: 7px 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border: 1px solid #493b57;
+  border-radius: 9px;
+
+  background: #17131e;
+}
+
+.recipe-progress span {
+  color: #8d7c9f;
+
+  font-size: 0.67rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.recipe-progress strong {
+  color: #d8c8f2;
+
+  font-size: 0.86rem;
+}
+
+
+/* =====================================================
+   LISTA DE INGREDIENTES
+   ===================================================== */
+
+.recipe-list-area {
+  min-width: 0;
+}
+
+.recipe-list-title {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #8d7c9f;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .recipe-ingredients {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 10px;
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(160px, 1fr));
+
+  gap: 7px;
 }
 
 .recipe-ingredient {
+  min-height: 38px;
+
   display: flex;
   align-items: center;
+
   gap: 8px;
 
-  padding: 8px 12px;
+  padding: 6px 9px;
 
   border: 1px solid #40354b;
-  border-radius: 10px;
+  border-radius: 9px;
 
   background: #17131e;
 
   color: #cfc2db;
-  font-size: 0.8rem;
+
+  font-size: 0.72rem;
+
+  transition:
+    opacity 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
 .recipe-ingredient-letter {
-  width: 26px;
-  height: 26px;
+  flex-shrink: 0;
+
+  width: 24px;
+  height: 24px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 8px;
+  border-radius: 7px;
 
   background: #2b2436;
   color: #bda7d8;
 
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 700;
 }
 
+.recipe-ingredient-collected {
+  border-color:
+    rgba(155, 126, 222, 0.55);
+
+  background:
+    rgba(71, 55, 88, 0.45);
+
+  color: #a99db5;
+
+  opacity: 0.7;
+}
+
+.recipe-ingredient-collected
+.recipe-ingredient-letter {
+  background: #5b4770;
+  color: #f3eef8;
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+   ===================================================== */
+
 .game-stats {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto 20px;
+
+  margin: 0 auto 12px;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  flex-shrink: 0;
 }
 
 .stat-card {
-  padding: 18px 20px;
+  padding: 10px 16px;
 
   border: 1px solid #342b40;
-  border-radius: 16px;
+  border-radius: 13px;
 
   background: #19151f;
 }
@@ -177,32 +337,54 @@
 .stat-card span {
   display: block;
 
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 
   color: #8d7c9f;
-  font-size: 0.75rem;
+
+  font-size: 0.67rem;
   font-weight: 600;
-  text-transform: uppercase;
+
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .stat-card strong {
   color: #eee7f4;
-  font-size: 1.5rem;
+
+  font-size: 1.2rem;
 }
+
+.stat-card-warning {
+  border-color: #8b526d;
+
+  background: #241722;
+}
+
+.stat-card-warning strong {
+  color: #e2a7c2;
+}
+
+
+/* =====================================================
+   TABLERO
+   ===================================================== */
 
 .game-board {
   position: relative;
 
+  width: 100%;
   max-width: 1200px;
-  min-height: 600px;
+
+  flex: 1;
+
+  min-height: 0;
 
   margin: 0 auto;
 
   overflow: hidden;
 
   border: 1px solid #3c3148;
-  border-radius: 24px;
+  border-radius: 22px;
 
   background:
     radial-gradient(
@@ -213,30 +395,38 @@
     #15111c;
 
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.3),
-    inset 0 0 60px rgba(0, 0, 0, 0.2);
+    0 25px 70px
+    rgba(0, 0, 0, 0.3),
+
+    inset
+    0 0 60px
+    rgba(0, 0, 0, 0.2);
 }
 
 .board-header {
   position: relative;
+
   z-index: 10;
+
+  height: 58px;
 
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
-  padding: 24px 26px;
+  padding: 12px 20px;
 }
 
 .board-header h2 {
   margin: 0;
 
   color: #eee7f4;
-  font-size: 1.2rem;
+
+  font-size: 1rem;
 }
 
 .board-level {
-  padding: 7px 12px;
+  padding: 6px 11px;
 
   border: 1px solid #493b57;
   border-radius: 999px;
@@ -245,7 +435,7 @@
 
   color: #bca9cb;
 
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 700;
 }
 
@@ -260,11 +450,228 @@
   z-index: 3;
 }
 
+
+/* =====================================================
+   NOTIFICACIÓN FLOTANTE
+   ===================================================== */
+
+.game-toast {
+  position: absolute;
+
+  top: 66px;
+  left: 50%;
+
+  z-index: 30;
+
+  width: max-content;
+  max-width: min(420px, 80%);
+
+  padding: 9px 16px;
+
+  transform: translateX(-50%);
+
+  border: 1px solid #554364;
+  border-radius: 10px;
+
+  background:
+    rgba(29, 24, 37, 0.94);
+
+  color: #d8c8f2;
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.35);
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  text-align: center;
+
+  pointer-events: none;
+
+  animation:
+    gameToastIn
+    0.25s
+    ease-out;
+}
+
+@keyframes gameToastIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(
+        -50%,
+        -8px
+      );
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(
+        -50%,
+        0
+      );
+  }
+}
+
+
+/* =====================================================
+   OVERLAY DE RESULTADO
+   ===================================================== */
+
+.game-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background:
+    rgba(10, 7, 15, 0.78);
+
+  backdrop-filter: blur(5px);
+}
+
+.game-result {
+  width: min(420px, 100%);
+
+  padding: 30px;
+
+  border: 1px solid #4a3b57;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #211a29,
+      #17131e
+    );
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.5);
+
+  text-align: center;
+}
+
+.game-result-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #9b7ede;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.game-result h2 {
+  margin: 0 0 10px;
+
+  color: #f3eef8;
+
+  font-size: 1.65rem;
+}
+
+.game-result p {
+  margin: 0 0 22px;
+
+  color: #a99db5;
+
+  font-size: 0.85rem;
+}
+
+.game-result p strong {
+  color: #d8c8f2;
+}
+
+.game-result-actions {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  flex-wrap: wrap;
+}
+
+.game-retry-button,
+.game-home-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 0 17px;
+
+  border-radius: 10px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.game-retry-button {
+  border: 1px solid #70588a;
+
+  background: #46345a;
+
+  color: #eee7f4;
+}
+
+.game-retry-button:hover {
+  background: #554169;
+
+  transform: translateY(-2px);
+}
+
+.game-home-button {
+  border: 1px solid #51435f;
+
+  background: #1d1825;
+
+  color: #cfc2db;
+}
+
+.game-home-button:hover {
+  background: #282032;
+
+  border-color: #806a99;
+
+  transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   PANTALLAS DE CARGA / ERROR
+   ===================================================== */
+
 .game-message {
   min-height: 100vh;
 
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   align-items: center;
 
@@ -289,18 +696,35 @@
   color: #d9a9c8;
 }
 
+.score-saved {
+  margin-top: 20px;
+}
+
+.score-saved p {
+  margin-bottom: 18px;
+  color: #bca9cb;
+}
+
+.score-saved .game-result-actions {
+  margin-top: 0;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
 @media (max-width: 850px) {
   .game-page {
+    height: auto;
+    min-height: 100vh;
+
+    overflow: visible;
+
     padding: 22px;
   }
 
   .recipe-panel {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .recipe-ingredients {
-    justify-content: flex-start;
+    grid-template-columns: 1fr;
   }
 
   .game-board {
@@ -315,14 +739,12 @@
 
   .game-header {
     align-items: flex-start;
+
     flex-direction: column;
   }
 
-  .game-header,
-  .recipe-panel,
-  .game-stats,
-  .game-board {
-    width: 100%;
+  .recipe-ingredients {
+    grid-template-columns: 1fr;
   }
 
   .game-stats {
@@ -331,14 +753,21 @@
 
   .game-board {
     min-height: 520px;
+
     border-radius: 18px;
   }
 
   .board-header {
-    padding: 18px;
+    height: 54px;
+
+    padding: 10px 16px;
   }
 
   .recipe-panel {
-    padding: 18px;
+    padding: 16px;
+  }
+
+  .game-result {
+    padding: 25px;
   }
 }

@@ -14,7 +14,10 @@ function Ingredient({
       return;
     }
 
-    onCollect(ingrediente, event);
+    onCollect(
+      ingrediente,
+      event
+    );
   };
 
   const style = {
@@ -23,7 +26,10 @@ function Ingredient({
     "--movement-speed": `${movementSpeed}s`
   };
 
-  if (isCollecting && flyDistance) {
+  if (
+    isCollecting &&
+    flyDistance
+  ) {
     style["--center-x"] =
       `${flyDistance.centerX}px`;
 
@@ -50,9 +56,11 @@ function Ingredient({
       title={ingrediente.nombre}
       disabled={isCollecting}
     >
-      <div className="ingredient-visual">
-        {ingrediente.nombre.charAt(0)}
-      </div>
+      <span className="ingredient-flight">
+        <span className="ingredient-visual">
+          {ingrediente.nombre.charAt(0)}
+        </span>
+      </span>
     </button>
   );
 }
