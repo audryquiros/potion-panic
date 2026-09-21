@@ -155,12 +155,6 @@ function Scores() {
             </div>
           )}
 
-        <Link
-          to="/"
-          className="scores-home-button"
-        >
-          Volver al inicio
-        </Link>
       </section>
     </main>
   );

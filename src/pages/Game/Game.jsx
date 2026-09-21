@@ -244,15 +244,15 @@ function Game() {
 
   const movementSpeedNivel =
     {
-      1: 10.5,
-      2: 8.6,
-      3: 7,
-      4: 5.7,
-      5: 4.7
-    }[nivelNumero] || 10.5;
+      1: 6.5,
+      2: 5.3,
+      3: 4.4,
+      4: 3.6,
+      5: 3
+    }[nivelNumero] || 6.5;
 
   const movementSpeedReceta =
-    [1, 0.84, 0.7][indiceReceta] ||
+    [1, 0.82, 0.68][indiceReceta] ||
     1;
 
   const movementSpeed =

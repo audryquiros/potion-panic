@@ -405,6 +405,13 @@
   pointer-events: none;
 }
 
+/* Los controles del tablero deben seguir siendo clickeables. */
+.board-header > .board-actions {
+  pointer-events: auto;
+  position: relative;
+  z-index: 100;
+}
+
 .board-header span {
   color: #6e6079;
 
@@ -424,6 +431,8 @@
 }
 
 .exit-button {
+  position: relative;
+  z-index: 101;
   pointer-events: auto;
 
   padding: 7px 13px;
@@ -643,6 +652,9 @@
 }
 
 .pause-button {
+  position: relative;
+  z-index: 101;
+  pointer-events: auto;
   padding: 7px 13px;
   border: 1px solid #624b73;
   border-radius: 8px;
@@ -667,7 +679,7 @@
 .pause-overlay {
   position: absolute;
   inset: 0;
-  z-index: 45;
+  z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
