@@ -6,7 +6,8 @@
       "imagen": "/assets/ingredients/mushroom.png",
       "velocidad": 1,
       "puntos": 20,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "2",
@@ -14,7 +15,8 @@
       "imagen": "/assets/ingredients/herb.png",
       "velocidad": 1,
       "puntos": 20,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "3",
@@ -22,7 +24,8 @@
       "imagen": "/assets/ingredients/crystal.png",
       "velocidad": 2,
       "puntos": 30,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "4",
@@ -30,7 +33,8 @@
       "imagen": "/assets/ingredients/flower.png",
       "velocidad": 1,
       "puntos": 25,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "5",
@@ -38,7 +42,8 @@
       "imagen": "/assets/ingredients/moon-dust.png",
       "velocidad": 2,
       "puntos": 30,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "6",
@@ -46,7 +51,8 @@
       "imagen": "/assets/ingredients/poison.png",
       "velocidad": 3,
       "puntos": 0,
-      "peligroso": true
+      "peligroso": true,
+      "distractor": false
     },
     {
       "id": "7",
@@ -54,7 +60,8 @@
       "imagen": "/assets/ingredients/shadow-root.png",
       "velocidad": 1.5,
       "puntos": 15,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
     },
     {
       "id": "8",
@@ -62,7 +69,206 @@
       "imagen": "/assets/ingredients/dragon-scale.png",
       "velocidad": 2.5,
       "puntos": 35,
-      "peligroso": false
+      "peligroso": false,
+      "distractor": false
+    },
+    {
+      "id": "9",
+      "nombre": "Baya Ígnea",
+      "imagen": "/assets/ingredients/fire-berry.svg",
+      "velocidad": 1.5,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "10",
+      "nombre": "Semilla Estelar",
+      "imagen": "/assets/ingredients/star-seed.svg",
+      "velocidad": 1.8,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "11",
+      "nombre": "Ojo de Cristal",
+      "imagen": "/assets/ingredients/crystal-eye.svg",
+      "velocidad": 2.1,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "12",
+      "nombre": "Pluma Espectral",
+      "imagen": "/assets/ingredients/spectral-feather.svg",
+      "velocidad": 2.4,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "13",
+      "nombre": "Piedra Rúnica",
+      "imagen": "/assets/ingredients/rune-stone.svg",
+      "velocidad": 1.5,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "14",
+      "nombre": "Escama de Sirena",
+      "imagen": "/assets/ingredients/mermaid-scale.svg",
+      "velocidad": 1.8,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "15",
+      "nombre": "Fruto Sombrío",
+      "imagen": "/assets/ingredients/shadow-fruit.svg",
+      "velocidad": 2.1,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "16",
+      "nombre": "Perla Lunar",
+      "imagen": "/assets/ingredients/moon-pearl.svg",
+      "velocidad": 2.4,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "17",
+      "nombre": "Hoja Carmesí",
+      "imagen": "/assets/ingredients/crimson-leaf.svg",
+      "velocidad": 1.5,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "18",
+      "nombre": "Gota de Aurora",
+      "imagen": "/assets/ingredients/aurora-drop.svg",
+      "velocidad": 1.8,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "19",
+      "nombre": "Fragmento de Obsidiana",
+      "imagen": "/assets/ingredients/obsidian-shard.svg",
+      "velocidad": 2.1,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "20",
+      "nombre": "Raíz Dorada",
+      "imagen": "/assets/ingredients/golden-root.svg",
+      "velocidad": 2.4,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "21",
+      "nombre": "Pétalo Astral",
+      "imagen": "/assets/ingredients/astral-petal.svg",
+      "velocidad": 1.5,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "22",
+      "nombre": "Arena de Cometa",
+      "imagen": "/assets/ingredients/comet-dust.svg",
+      "velocidad": 1.8,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "23",
+      "nombre": "Campana Arcana",
+      "imagen": "/assets/ingredients/arcane-bell.svg",
+      "velocidad": 2.1,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "24",
+      "nombre": "Corazón de Musgo",
+      "imagen": "/assets/ingredients/moss-heart.svg",
+      "velocidad": 2.4,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "25",
+      "nombre": "Hueso de Dragón",
+      "imagen": "/assets/ingredients/dragon-bone.svg",
+      "velocidad": 1.5,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "26",
+      "nombre": "Vela Fantasma",
+      "imagen": "/assets/ingredients/ghost-candle.svg",
+      "velocidad": 1.8,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "27",
+      "nombre": "Rosa de Hielo",
+      "imagen": "/assets/ingredients/ice-rose.svg",
+      "velocidad": 2.1,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "28",
+      "nombre": "Frasco de Éter",
+      "imagen": "/assets/ingredients/ether-vial.svg",
+      "velocidad": 2.4,
+      "puntos": 0,
+      "peligroso": false,
+      "distractor": true
+    },
+    {
+      "id": "29",
+      "nombre": "Veneno de Araña",
+      "imagen": "/assets/ingredients/poison.png",
+      "velocidad": 3.2,
+      "puntos": 0,
+      "peligroso": true,
+      "distractor": false
+    },
+    {
+      "id": "30",
+      "nombre": "Elixir Tóxico",
+      "imagen": "/assets/ingredients/poison.png",
+      "velocidad": 3.4,
+      "puntos": 0,
+      "peligroso": true,
+      "distractor": false
     }
   ],
   "recetas": [

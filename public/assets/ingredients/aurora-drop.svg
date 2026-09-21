@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
+<radialGradient id="gauroradrop" cx="32%" cy="28%"><stop offset="0" stop-color="#c7fff2"/><stop offset=".48" stop-color="#52c9b0"/><stop offset="1" stop-color="#265f68"/></radialGradient>
+<linearGradient id="hauroradrop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<filter id="sauroradrop" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feFlood flood-color="#52c9b0" flood-opacity=".48" result="c"/><feComposite in="c" in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g filter="url(#sauroradrop)"><path d="M50 10C65 31 77 43 77 58c0 18-12 29-27 29S23 76 23 58c0-15 12-27 27-48Z" fill="url(#gauroradrop)"/><ellipse cx="42" cy="46" rx="9" ry="16" fill="url(#hauroradrop)"/></g></svg>

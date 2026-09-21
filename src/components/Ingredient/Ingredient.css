@@ -171,16 +171,16 @@
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(35px * var(--movement-scale))
+        calc(90px * var(--movement-scale)),
+        calc(55px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(30px * var(--movement-scale)),
-        calc(75px * var(--movement-scale))
+        calc(70px * var(--movement-scale)),
+        calc(80px * var(--movement-scale))
       );
   }
 }
@@ -193,16 +193,16 @@
   50% {
     transform:
       translate(
-        calc(-65px * var(--movement-scale)),
-        calc(35px * var(--movement-scale))
+        calc(-85px * var(--movement-scale)),
+        calc(55px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-25px * var(--movement-scale)),
-        calc(70px * var(--movement-scale))
+        calc(-50px * var(--movement-scale)),
+        calc(90px * var(--movement-scale))
       );
   }
 }
@@ -215,16 +215,16 @@
   50% {
     transform:
       translate(
-        calc(-65px * var(--movement-scale)),
-        calc(30px * var(--movement-scale))
+        calc(-85px * var(--movement-scale)),
+        calc(70px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-80px * var(--movement-scale)),
-        calc(70px * var(--movement-scale))
+        calc(-90px * var(--movement-scale)),
+        calc(90px * var(--movement-scale))
       );
   }
 }
@@ -237,16 +237,16 @@
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(-35px * var(--movement-scale))
+        calc(90px * var(--movement-scale)),
+        calc(-80px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(40px * var(--movement-scale)),
-        calc(-75px * var(--movement-scale))
+        calc(60px * var(--movement-scale)),
+        calc(-90px * var(--movement-scale))
       );
   }
 }
@@ -259,16 +259,16 @@
   50% {
     transform:
       translate(
-        calc(-70px * var(--movement-scale)),
-        calc(-35px * var(--movement-scale))
+        calc(-90px * var(--movement-scale)),
+        calc(-80px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-35px * var(--movement-scale)),
-        calc(-80px * var(--movement-scale))
+        calc(-80px * var(--movement-scale)),
+        calc(-90px * var(--movement-scale))
       );
   }
 }
@@ -281,15 +281,15 @@
   50% {
     transform:
       translate(
-        calc(65px * var(--movement-scale)),
-        calc(40px * var(--movement-scale))
+        calc(85px * var(--movement-scale)),
+        calc(60px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(30px * var(--movement-scale)),
+        calc(70px * var(--movement-scale)),
         calc(80px * var(--movement-scale))
       );
   }
@@ -303,16 +303,16 @@
   50% {
     transform:
       translate(
-        calc(-75px * var(--movement-scale)),
-        calc(45px * var(--movement-scale))
+        calc(-90px * var(--movement-scale)),
+        calc(55px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(55px * var(--movement-scale)),
-        calc(-60px * var(--movement-scale))
+        calc(70px * var(--movement-scale)),
+        calc(-80px * var(--movement-scale))
       );
   }
 }
@@ -325,16 +325,16 @@
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(-40px * var(--movement-scale))
+        calc(90px * var(--movement-scale)),
+        calc(-55px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-60px * var(--movement-scale)),
-        calc(65px * var(--movement-scale))
+        calc(-80px * var(--movement-scale)),
+        calc(85px * var(--movement-scale))
       );
   }
 }
@@ -348,14 +348,8 @@
   pointer-events: none;
   cursor: default;
   animation: none !important;
-  will-change: transform;
 }
 
-/*
- * El vuelo se hace sobre el contenido interno.
- * Game.jsx calcula --delta-x y --delta-y desde
- * la posición real del ingrediente hasta el caldero.
- */
 .ingredient-collecting .ingredient-flight {
   display: block;
   width: 100%;
@@ -363,8 +357,8 @@
 
   animation:
     ingredientFlyToCauldron
-    1.05s
-    cubic-bezier(0.22, 0.72, 0.24, 1)
+    1.2s
+    cubic-bezier(0.16, 1, 0.3, 1)
     forwards;
 
   transform-origin: center center;
@@ -372,85 +366,93 @@
 }
 
 .ingredient-collecting .ingredient-visual img {
-  animation:
-    ingredientShrinkToCauldron
-    1.05s
-    cubic-bezier(0.22, 0.72, 0.24, 1)
-    forwards;
-
   filter:
     drop-shadow(
       0 0 12px
-      rgba(155, 126, 222, 0.65)
+      rgba(155, 126, 222, 0.7)
     )
     drop-shadow(
       0 0 24px
-      rgba(155, 126, 222, 0.28)
+      rgba(155, 126, 222, 0.3)
     );
-
-  will-change: transform, opacity;
 }
 
-/*
- * Movimiento en una trayectoria suave.
- * No usamos --center-x/--cauldron-x porque
- * Game.jsx entrega directamente el desplazamiento.
- */
 @keyframes ingredientFlyToCauldron {
   0% {
-    transform:
-      translate3d(0, 0, 0)
-      rotate(0deg)
-      scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
     opacity: 1;
   }
 
-  18% {
+  12% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.12),
-        calc(var(--delta-y) * 0.12 - 28px),
+        calc(var(--delta-x) * 0.08),
+        calc(var(--delta-y) * 0.08 - 18px),
         0
       )
-      rotate(8deg)
-      scale(1.06);
+      scale(1.06)
+      rotate(5deg);
     opacity: 1;
   }
 
-  40% {
+  30% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.38),
-        calc(var(--delta-y) * 0.38 - 42px),
+        calc(var(--delta-x) * 0.25),
+        calc(var(--delta-y) * 0.25 - 32px),
         0
       )
-      rotate(-8deg)
-      scale(1.02);
+      scale(1.03)
+      rotate(-5deg);
     opacity: 1;
   }
 
-  65% {
+  52% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.65),
-        calc(var(--delta-y) * 0.65 - 28px),
+        calc(var(--delta-x) * 0.50),
+        calc(var(--delta-y) * 0.50 - 30px),
         0
       )
-      rotate(6deg)
-      scale(0.88);
+      scale(0.93)
+      rotate(4deg);
     opacity: 1;
   }
 
-  84% {
+  72% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.84),
-        calc(var(--delta-y) * 0.84 - 10px),
+        calc(var(--delta-x) * 0.72),
+        calc(var(--delta-y) * 0.72 - 17px),
         0
       )
-      rotate(-4deg)
-      scale(0.7);
-    opacity: 0.96;
+      scale(0.76)
+      rotate(-3deg);
+    opacity: 0.98;
+  }
+
+  88% {
+    transform:
+      translate3d(
+        calc(var(--delta-x) * 0.88),
+        calc(var(--delta-y) * 0.88 - 5px),
+        0
+      )
+      scale(0.58)
+      rotate(2deg);
+    opacity: 0.82;
+  }
+
+  96% {
+    transform:
+      translate3d(
+        calc(var(--delta-x) * 0.97),
+        calc(var(--delta-y) * 0.97),
+        0
+      )
+      scale(0.42)
+      rotate(-1deg);
+    opacity: 0.55;
   }
 
   100% {
@@ -460,35 +462,8 @@
         var(--delta-y),
         0
       )
-      rotate(0deg)
-      scale(0.34);
-    opacity: 0;
-  }
-}
-
-@keyframes ingredientShrinkToCauldron {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  45% {
-    transform: scale(0.98);
-    opacity: 1;
-  }
-
-  70% {
-    transform: scale(0.82);
-    opacity: 0.95;
-  }
-
-  88% {
-    transform: scale(0.58);
-    opacity: 0.75;
-  }
-
-  100% {
-    transform: scale(0.16);
+      scale(0.16)
+      rotate(0deg);
     opacity: 0;
   }
 }

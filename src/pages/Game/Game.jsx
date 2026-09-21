@@ -16,56 +16,66 @@ const CONFIGURACION_NIVELES = {
   1: {
     tiempo: 35,
     vidas: 3,
-    ingredientesVolando: 9
+    ingredientesVolando: 15
   },
   2: {
     tiempo: 30,
     vidas: 3,
-    ingredientesVolando: 12
+    ingredientesVolando: 20
   },
   3: {
     tiempo: 27,
     vidas: 3,
-    ingredientesVolando: 15
+    ingredientesVolando: 25
   },
   4: {
     tiempo: 24,
     vidas: 2,
-    ingredientesVolando: 18
+    ingredientesVolando: 30
   },
   5: {
     tiempo: 20,
     vidas: 2,
-    ingredientesVolando: 21
+    ingredientesVolando: 35
   }
 };
 
 const POSICIONES_INGREDIENTES = [
-  { top: "6%", left: "13%" },
-  { top: "7%", left: "27%" },
-  { top: "6%", left: "41%" },
-  { top: "8%", left: "55%" },
-  { top: "7%", left: "69%" },
-
-  { top: "19%", left: "13%" },
-  { top: "21%", left: "27%" },
-  { top: "18%", left: "41%" },
-  { top: "22%", left: "55%" },
-  { top: "20%", left: "69%" },
-
-  { top: "32%", left: "13%" },
-  { top: "34%", left: "27%" },
-  { top: "31%", left: "41%" },
-  { top: "35%", left: "55%" },
-  { top: "33%", left: "69%" },
-
-  { top: "45%", left: "13%" },
-  { top: "43%", left: "27%" },
-  { top: "47%", left: "41%" },
-  { top: "44%", left: "55%" },
-  { top: "46%", left: "69%" },
-
-  { top: "26%", left: "48%" }
+  { top: "3%", left: "4%" },
+  { top: "3%", left: "19%" },
+  { top: "3%", left: "34%" },
+  { top: "3%", left: "49%" },
+  { top: "3%", left: "64%" },
+  { top: "3%", left: "79%" },
+  { top: "3%", left: "91%" },
+  { top: "21%", left: "6%" },
+  { top: "21%", left: "21%" },
+  { top: "21%", left: "36%" },
+  { top: "21%", left: "51%" },
+  { top: "21%", left: "66%" },
+  { top: "21%", left: "81%" },
+  { top: "21%", left: "92%" },
+  { top: "39%", left: "4%" },
+  { top: "39%", left: "19%" },
+  { top: "39%", left: "34%" },
+  { top: "39%", left: "49%" },
+  { top: "39%", left: "64%" },
+  { top: "39%", left: "79%" },
+  { top: "39%", left: "91%" },
+  { top: "57%", left: "6%" },
+  { top: "57%", left: "21%" },
+  { top: "57%", left: "36%" },
+  { top: "57%", left: "51%" },
+  { top: "57%", left: "66%" },
+  { top: "57%", left: "81%" },
+  { top: "57%", left: "92%" },
+  { top: "72%", left: "4%" },
+  { top: "72%", left: "19%" },
+  { top: "72%", left: "34%" },
+  { top: "72%", left: "49%" },
+  { top: "72%", left: "64%" },
+  { top: "72%", left: "79%" },
+  { top: "72%", left: "91%" }
 ];
 
 const PATRONES_MOVIMIENTO = [
@@ -113,6 +123,11 @@ function Game() {
   const [
     ingredientesRecogidos,
     setIngredientesRecogidos
+  ] = useState([]);
+
+  const [
+    ingredientesInstanciasRecogidas,
+    setIngredientesInstanciasRecogidas
   ] = useState([]);
 
   const [
@@ -262,11 +277,21 @@ function Game() {
   /*
    * Ingredientes que aparecen volando
    * por el laboratorio.
+   *
+   * Composición del tablero:
+   * - Un poco más de la mitad son ingredientes reales.
+   * - Siempre hay 3 venenos.
+   * - El resto son ingredientes de relleno.
+   *
+   * Esto evita que el tablero se llene de repeticiones
+   * y hace que el jugador tenga que distinguir mejor
+   * lo que necesita de lo que no.
    */
   const ingredientesVolando = useMemo(() => {
     if (
       ingredientes.length === 0 ||
-      !configuracion
+      !configuracion ||
+      !recetaActual
     ) {
       return [];
     }
@@ -274,59 +299,207 @@ function Game() {
     const cantidad =
       configuracion.ingredientesVolando;
 
-    const ingredientesSeguros =
-      ingredientes.filter(
-        (ingrediente) =>
-          !ingrediente.peligroso
-      );
+    /*
+     * Todos los ingredientes que pueden formar parte
+     * de una receta. Son los 8 ingredientes originales.
+     */
+    const ingredientesReales = ingredientes.filter(
+      (ingrediente) =>
+        ingrediente.distractor !== true &&
+        ingrediente.peligroso !== true
+    );
 
-    const veneno =
-      ingredientes.find(
-        (ingrediente) =>
-          ingrediente.peligroso
-      );
+    /*
+     * Ingredientes que pueden completar la receta actual.
+     */
+    const ingredientesReceta = recetaActual.ingredientes
+      .map((ingredienteId) =>
+        ingredientes.find(
+          (ingrediente) =>
+            Number(ingrediente.id) ===
+            Number(ingredienteId)
+        )
+      )
+      .filter(Boolean);
+
+    /*
+     * Los nuevos ingredientes de relleno no aparecen
+     * en ninguna receta.
+     */
+    const distractores = ingredientes.filter(
+      (ingrediente) =>
+        ingrediente.distractor === true
+    );
+
+    /*
+     * Hay 3 venenos por tablero.
+     * Tenemos tres variantes, pero mantienen el mismo
+     * estilo visual del veneno original.
+     */
+    const venenos = ingredientes.filter(
+      (ingrediente) =>
+        ingrediente.peligroso === true
+    );
+
+    const cantidadIngredientesReales = Math.min(
+      Math.ceil(cantidad * 0.6),
+      cantidad - 3
+    );
+
+    const cantidadVenenos = Math.min(
+      3,
+      venenos.length,
+      cantidad - cantidadIngredientesReales
+    );
+
+    const cantidadDistractores = Math.max(
+      0,
+      cantidad -
+        cantidadIngredientesReales -
+        cantidadVenenos
+    );
 
     const resultado = [];
 
-    for (
-      let index = 0;
-      index < cantidad;
-      index++
-    ) {
-      let ingrediente;
+    /*
+     * Primero garantizamos que todos los ingredientes
+     * de la receta actual aparezcan al menos una vez.
+     */
+    ingredientesReceta.forEach(
+      (ingrediente) => {
+        if (
+          resultado.length <
+          cantidadIngredientesReales
+        ) {
+          resultado.push(ingrediente);
+        }
+      }
+    );
 
-      /*
-       * Siempre dejamos un ingrediente
-       * peligroso dentro del tablero.
-       */
-      if (
-        index === cantidad - 1 &&
-        veneno
-      ) {
-        ingrediente = veneno;
-      } else {
-        ingrediente =
-          ingredientesSeguros[
-            index %
-              ingredientesSeguros.length
-          ];
+    /*
+     * Completamos la cuota de ingredientes reales.
+     * Aquí sí pueden existir repeticiones, pero únicamente
+     * para llenar el tablero; los distractores son los que
+     * aportan variedad visual adicional.
+     */
+    let indiceReal =
+      (nivelNumero * 5 + indiceReceta * 3) %
+      Math.max(1, ingredientesReales.length);
+
+    while (
+      resultado.length <
+      cantidadIngredientesReales
+    ) {
+      const ingrediente =
+        ingredientesReales[
+          indiceReal % ingredientesReales.length
+        ];
+
+      if (ingrediente) {
+        resultado.push(ingrediente);
       }
 
-      if (!ingrediente) continue;
-
-      resultado.push({
-        ...ingrediente,
-
-        instanceId: `${ingrediente.id}-${index}-${nivelNumero}-${indiceReceta}`
-      });
+      indiceReal += 1;
     }
 
-    return resultado;
+    /*
+     * Después colocamos exactamente 3 venenos.
+     * Rotamos las variantes para que no aparezca siempre
+     * el mismo tipo en las mismas partidas.
+     */
+    for (
+      let index = 0;
+      index < cantidadVenenos;
+      index++
+    ) {
+      const veneno =
+        venenos[
+          (
+            nivelNumero +
+            indiceReceta +
+            index
+          ) % venenos.length
+        ];
+
+      if (veneno) {
+        resultado.push(veneno);
+      }
+    }
+
+    /*
+     * Finalmente agregamos los ingredientes de relleno.
+     * No se repiten hasta agotar la colección disponible.
+     */
+    if (distractores.length > 0) {
+      const inicio =
+        (nivelNumero * 3 + indiceReceta * 4) %
+        distractores.length;
+
+      for (
+        let index = 0;
+        index < cantidadDistractores;
+        index++
+      ) {
+        const distractor =
+          distractores[
+            (inicio + index) %
+            distractores.length
+          ];
+
+        if (distractor) {
+          resultado.push(distractor);
+        }
+      }
+    }
+
+    /*
+     * Mezcla determinista para distribuir los tres grupos
+     * por todo el tablero sin cambiar la composición.
+     */
+    const ordenados = [...resultado];
+
+    let seed =
+      nivelNumero * 97 +
+      indiceReceta * 31 +
+      cantidad * 13;
+
+    for (
+      let index = ordenados.length - 1;
+      index > 0;
+      index--
+    ) {
+      seed =
+        (seed * 9301 + 49297) %
+        233280;
+
+      const posicion =
+        Math.floor(
+          (seed / 233280) *
+          (index + 1)
+        );
+
+      [
+        ordenados[index],
+        ordenados[posicion]
+      ] = [
+        ordenados[posicion],
+        ordenados[index]
+      ];
+    }
+
+    return ordenados.map(
+      (ingrediente, index) => ({
+        ...ingrediente,
+        instanceId:
+          `${ingrediente.id}-${index}-${nivelNumero}-${indiceReceta}`
+      })
+    );
   }, [
     ingredientes,
     configuracion,
     nivelNumero,
-    indiceReceta
+    indiceReceta,
+    recetaActual
   ]);
 
   /*
@@ -391,6 +564,7 @@ function Game() {
 
     setIndiceReceta(0);
     setIngredientesRecogidos([]);
+    setIngredientesInstanciasRecogidas([]);
     setIngredienteRecogiendo(null);
     setFlyDistance(null);
 
@@ -739,12 +913,19 @@ function Game() {
         ]
       );
 
+      setIngredientesInstanciasRecogidas(
+        (anteriores) => [
+          ...anteriores,
+          ingrediente.instanceId
+        ]
+      );
+
       setIngredienteRecogiendo(
         null
       );
 
       setFlyDistance(null);
-    }, 900);
+    }, 1200);
   };
 
   /*
@@ -805,6 +986,7 @@ function Game() {
         );
 
         setIngredientesRecogidos([]);
+        setIngredientesInstanciasRecogidas([]);
 
         /*
          * El tiempo pertenece al nivel completo.
@@ -1353,18 +1535,12 @@ function Game() {
                 ingredienteRecogiendo ===
                 ingrediente.instanceId;
 
-              const ingredienteYaRecogido =
-                ingredientesRecogidos
-                  .map(Number)
-                  .includes(
-                    Number(
-                      ingrediente.id
-                    )
-                  );
+              const instanciaYaRecogida =
+                ingredientesInstanciasRecogidas.includes(
+                  ingrediente.instanceId
+                );
 
-              if (
-                ingredienteYaRecogido
-              ) {
+              if (instanciaYaRecogida) {
                 return null;
               }
 

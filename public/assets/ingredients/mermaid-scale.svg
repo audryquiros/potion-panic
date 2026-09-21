@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
+<radialGradient id="gmermaidscale" cx="32%" cy="28%"><stop offset="0" stop-color="#a9f0ef"/><stop offset=".48" stop-color="#4b9fc2"/><stop offset="1" stop-color="#23486c"/></radialGradient>
+<linearGradient id="hmermaidscale" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<filter id="smermaidscale" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feFlood flood-color="#4b9fc2" flood-opacity=".48" result="c"/><feComposite in="c" in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g filter="url(#smermaidscale)"><path d="M50 12C68 18 82 32 82 51 82 70 68 82 50 88 32 82 18 70 18 51 18 32 32 18 50 12Z" fill="url(#gmermaidscale)"/><path d="M25 43q10-12 20 0t20 0 10 0M23 57q12-12 24 0t24 0 7 0M30 70q10-9 20 0t20 0" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/></g></svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
+<radialGradient id="gghostcandle" cx="32%" cy="28%"><stop offset="0" stop-color="#e5dcff"/><stop offset=".48" stop-color="#8e82c8"/><stop offset="1" stop-color="#3e365d"/></radialGradient>
+<linearGradient id="hghostcandle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<filter id="sghostcandle" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feFlood flood-color="#8e82c8" flood-opacity=".48" result="c"/><feComposite in="c" in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g filter="url(#sghostcandle)"><path d="M33 33h34v47c-11 6-23 6-34 0Z" fill="url(#gghostcandle)"/><path d="M50 33c-8-10 2-19 1-27 9 8 12 17 5 27Z" fill="#8e82c8"/><ellipse cx="43" cy="46" rx="8" ry="15" fill="url(#hghostcandle)"/></g></svg>

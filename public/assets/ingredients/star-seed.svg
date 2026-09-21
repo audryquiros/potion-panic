@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
+<radialGradient id="gstarseed" cx="32%" cy="28%"><stop offset="0" stop-color="#e5e8ff"/><stop offset=".48" stop-color="#7483ff"/><stop offset="1" stop-color="#302e73"/></radialGradient>
+<linearGradient id="hstarseed" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<filter id="sstarseed" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feFlood flood-color="#7483ff" flood-opacity=".48" result="c"/><feComposite in="c" in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g filter="url(#sstarseed)"><path d="M50 9 59 37 89 39 66 56 74 86 50 69 26 86 34 56 11 39 41 37Z" fill="url(#gstarseed)"/><circle cx="42" cy="35" r="8" fill="url(#hstarseed)"/></g></svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
+<radialGradient id="ggoldenroot" cx="32%" cy="28%"><stop offset="0" stop-color="#ffe4a0"/><stop offset=".48" stop-color="#c99a3d"/><stop offset="1" stop-color="#6c4d20"/></radialGradient>
+<linearGradient id="hgoldenroot" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<filter id="sgoldenroot" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feFlood flood-color="#c99a3d" flood-opacity=".48" result="c"/><feComposite in="c" in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g filter="url(#sgoldenroot)"><path d="M45 15 55 15 58 45c2 8 16 12 18 20 2 8-8 12-15 6-5-4-8-11-11-16-3 5-6 12-11 16-7 6-17 2-15-6 2-8 16-12 18-20Z" fill="url(#ggoldenroot)"/><path d="M50 16V65M38 67 27 80M62 67 73 80" stroke="#fff" stroke-opacity=".25" stroke-width="3"/></g></svg>
