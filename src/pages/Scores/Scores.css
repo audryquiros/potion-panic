@@ -1,0 +1,44 @@
+.scores-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #171421;
+  color: #f5f1ff;
+}
+
+.scores-card {
+  width: min(650px, 100%);
+  padding: 45px;
+  text-align: center;
+  border: 1px solid #3c3549;
+  border-radius: 18px;
+  background: #211c2c;
+}
+
+.scores-card h1 {
+  margin: 10px 0 20px;
+  font-size: 3rem;
+}
+
+.scores-card p {
+  color: #c3bdce;
+}
+
+.secondary-button {
+  display: inline-block;
+  padding: 13px 26px;
+  border: 1px solid #4c435d;
+  border-radius: 10px;
+  color: #e5def2;
+  background: #211c2c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.secondary-button:hover {
+  border-color: #9b7ede;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,52 @@
+.instructions-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #171421;
+  color: #f5f1ff;
+}
+
+.instructions-card {
+  width: min(650px, 100%);
+  padding: 45px;
+  border: 1px solid #3c3549;
+  border-radius: 18px;
+  background: #211c2c;
+}
+
+.page-label {
+  color: #a995d8;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+}
+
+.instructions-card h1 {
+  margin: 10px 0 20px;
+  font-size: 3rem;
+}
+
+.instructions-card p {
+  color: #c3bdce;
+  line-height: 1.7;
+}
+
+.instructions-card ul {
+  padding-left: 20px;
+  margin: 25px 0 35px;
+  color: #d8d1e2;
+  line-height: 2;
+}
+
+.instructions-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.instructions-actions .primary-button,
+.instructions-actions .secondary-button {
+  display: inline-block;
+}
