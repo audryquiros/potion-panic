@@ -273,13 +273,29 @@ function Game() {
       5: 3
     }[nivelNumero] || 6.5;
 
-  const movementSpeedReceta =
-    [1, 0.82, 0.68][indiceReceta] ||
-    1;
+  /*
+   * La tercera receta alcanza la velocidad con la que
+   * comienza el siguiente nivel.
+   *
+   * Receta 1 = velocidad inicial del nivel.
+   * Receta 2 = transición intermedia.
+   * Receta 3 = velocidad inicial del siguiente nivel.
+   */
+  const movementSpeedSiguienteNivel =
+    {
+      1: 5.3,
+      2: 4.4,
+      3: 3.6,
+      4: 3,
+      5: 2.7
+    }[nivelNumero] || movementSpeedNivel;
 
   const movementSpeed =
-    movementSpeedNivel *
-    movementSpeedReceta;
+    indiceReceta === 0
+      ? movementSpeedNivel
+      : indiceReceta === 1
+        ? (movementSpeedNivel + movementSpeedSiguienteNivel) / 2
+        : movementSpeedSiguienteNivel;
 
   /*
    * Ingredientes que aparecen volando

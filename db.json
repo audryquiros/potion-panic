@@ -492,6 +492,15 @@
       "resultado": "derrota",
       "fecha": "2026-09-21T17:11:02.183Z",
       "id": "S4GNbK3CA-Y"
+    },
+    {
+      "nombre": "Audry Quiros",
+      "puntos": 725,
+      "nivel": 2,
+      "nivelesCompletados": 1,
+      "resultado": "derrota",
+      "fecha": "2026-09-21T21:03:34.334Z",
+      "id": "NSriuG72ALA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
