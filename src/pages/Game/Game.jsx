@@ -138,6 +138,14 @@ function Game() {
   const [flyDistance, setFlyDistance] =
     useState(null);
 
+  /*
+   * Transform exacto del ingrediente en el momento del clic.
+   * Se usa para congelar únicamente ese ingrediente mientras
+   * empieza el vuelo hacia el caldero.
+   */
+  const [freezeTransform, setFreezeTransform] =
+    useState("none");
+
   const [puntos, setPuntos] = useState(() => {
     return Number(
       sessionStorage.getItem(
@@ -161,6 +169,7 @@ function Game() {
   });
 
   const [mensaje, setMensaje] = useState("");
+  const [mensajeTipo, setMensajeTipo] = useState("normal");
 
   const [feedback, setFeedback] =
     useState(null);
@@ -567,6 +576,7 @@ function Game() {
     setIngredientesInstanciasRecogidas([]);
     setIngredienteRecogiendo(null);
     setFlyDistance(null);
+    setFreezeTransform("none");
 
     setVidas(configuracion.vidas);
     setTiempo(configuracion.tiempo);
@@ -596,6 +606,7 @@ function Game() {
     }
 
     if (tiempo <= 0) {
+      setMensajeTipo("peligro");
       setMensaje(
         "Se acabó el tiempo."
       );
@@ -651,7 +662,8 @@ function Game() {
 
     const timer = setTimeout(() => {
       setMensaje("");
-    }, 1600);
+      setMensajeTipo("normal");
+    }, 2200);
 
     return () => {
       clearTimeout(timer);
@@ -720,6 +732,7 @@ function Game() {
         if (nuevasVidas <= 0) {
           setEstadoJuego("derrota");
 
+          setMensajeTipo("peligro");
           setMensaje(
             "El veneno arruinó la poción."
           );
@@ -738,8 +751,9 @@ function Game() {
         "-1 vida"
       );
 
+      setMensajeTipo("peligro");
       setMensaje(
-        "¡Ingrediente peligroso!"
+        "¡Ingrediente peligroso! · -1 vida"
       );
 
       return;
@@ -759,8 +773,9 @@ function Game() {
         "-10"
       );
 
+      setMensajeTipo("incorrecto");
       setMensaje(
-        "Ingrediente incorrecto"
+        "Ingrediente incorrecto · -10 puntos"
       );
 
       return;
@@ -803,8 +818,24 @@ function Game() {
       const cauldronRect =
         cauldronElement.getBoundingClientRect();
 
-      const boardRect =
-        boardElement.getBoundingClientRect();
+      /*
+       * Leemos una sola vez el transform que el navegador
+       * está aplicando por la animación de flotación.
+       * En lugar de cambiar a position: fixed, mantenemos
+       * el ingrediente en su misma capa y congelamos este
+       * transform. Esto evita el pequeño salto y evita que
+       * el cambio de layout interfiera con los demás ingredientes.
+       */
+      const currentTransform =
+        window.getComputedStyle(
+          ingredientElement
+        ).transform;
+
+      setFreezeTransform(
+        currentTransform === "none"
+          ? "none"
+          : currentTransform
+      );
 
       const startX =
         ingredientRect.left;
@@ -813,12 +844,9 @@ function Game() {
         ingredientRect.top;
 
       /*
-       * Calculamos el punto exacto donde
-       * el centro del ingrediente debe llegar.
-       *
-       * Usamos coordenadas de viewport porque
-       * durante el vuelo el ingrediente pasa
-       * temporalmente a position: fixed.
+       * El objetivo es la zona superior del líquido, no
+       * el centro de todo el contenedor del caldero.
+       * Así la caída termina visualmente dentro de la poción.
        */
       const targetX =
         cauldronRect.left +
@@ -827,7 +855,7 @@ function Game() {
 
       const targetY =
         cauldronRect.top +
-        cauldronRect.height * 0.28 -
+        cauldronRect.height * 0.25 -
         ingredientRect.height / 2;
 
       const deltaX =
@@ -836,13 +864,27 @@ function Game() {
       const deltaY =
         targetY - startY;
 
+      /*
+       * Altura del arco. La trayectoria sube un poco antes
+       * de caer al caldero, pero sin importar desde qué lado
+       * se pulse el ingrediente.
+       */
+      const arcHeight = Math.min(
+        145,
+        Math.max(
+          62,
+          Math.abs(deltaX) * 0.12 + 52
+        )
+      );
+
       setFlyDistance({
         startX,
         startY,
         targetX,
         targetY,
         deltaX,
-        deltaY
+        deltaY,
+        arcHeight
       });
     }
 
@@ -877,55 +919,49 @@ function Game() {
       `+${ingrediente.puntos}`
     );
 
+    setMensajeTipo("correcto");
     setMensaje(
-      `+${ingrediente.puntos} puntos`
+      `Ingrediente añadido · +${ingrediente.puntos} puntos`
     );
 
-    /*
-     * IMPORTANTE:
-     * El caldero NO reacciona todavía.
-     *
-     * Esperamos a que termine la animación
-     * de vuelo de 900ms.
-     */
+  };
+
+  /*
+   * Se ejecuta exactamente cuando termina la animación CSS.
+   * Así la reacción del caldero queda sincronizada con la caída
+   * y no depende de un timeout aproximado.
+   */
+  const handleIngredientFlightComplete = (ingrediente) => {
+    if (
+      ingredienteRecogiendo !==
+      ingrediente.instanceId
+    ) {
+      return;
+    }
+
+    setCalderoReaccionando(true);
+
     window.setTimeout(() => {
-      /*
-       * El ingrediente ya llegó al caldero.
-       * Ahora ocurre la reacción.
-       */
-      setCalderoReaccionando(true);
+      setCalderoReaccionando(false);
+    }, 820);
 
-      /*
-       * Apagamos la reacción después
-       * de terminar la animación.
-       */
-      window.setTimeout(() => {
-        setCalderoReaccionando(false);
-      }, 900);
+    setIngredientesRecogidos(
+      (anteriores) => [
+        ...anteriores,
+        ingrediente.id
+      ]
+    );
 
-      /*
-       * Registramos el ingrediente como agregado.
-       */
-      setIngredientesRecogidos(
-        (anteriores) => [
-          ...anteriores,
-          ingrediente.id
-        ]
-      );
+    setIngredientesInstanciasRecogidas(
+      (anteriores) => [
+        ...anteriores,
+        ingrediente.instanceId
+      ]
+    );
 
-      setIngredientesInstanciasRecogidas(
-        (anteriores) => [
-          ...anteriores,
-          ingrediente.instanceId
-        ]
-      );
-
-      setIngredienteRecogiendo(
-        null
-      );
-
-      setFlyDistance(null);
-    }, 1200);
+    setIngredienteRecogiendo(null);
+    setFlyDistance(null);
+    setFreezeTransform("none");
   };
 
   /*
@@ -965,8 +1001,9 @@ function Game() {
       (valor) => valor + 100
     );
 
+    setMensajeTipo("exito");
     setMensaje(
-      "¡Poción preparada! +100"
+      "¡Poción preparada! · +100 puntos"
     );
 
     const timer = setTimeout(() => {
@@ -1134,7 +1171,9 @@ function Game() {
    * Reiniciar nivel.
    */
   const reiniciarNivel = () => {
+    setIndiceReceta(0);
     setIngredientesRecogidos([]);
+    setIngredientesInstanciasRecogidas([]);
 
     setIngredienteRecogiendo(
       null
@@ -1163,6 +1202,7 @@ function Game() {
     setFeedback(null);
 
     setMensaje("");
+    setMensajeTipo("normal");
   };
 
   /*
@@ -1558,6 +1598,9 @@ function Game() {
                   onCollect={
                     handleCollectIngredient
                   }
+                  onFlightComplete={
+                    handleIngredientFlightComplete
+                  }
                   isCollecting={
                     isCollecting
                   }
@@ -1568,6 +1611,11 @@ function Game() {
                     isCollecting
                       ? flyDistance
                       : null
+                  }
+                  freezeTransform={
+                    isCollecting
+                      ? freezeTransform
+                      : "none"
                   }
                   movementSpeed={
                     movementSpeed
@@ -1605,8 +1653,11 @@ function Game() {
             TOAST
         ====================================== */}
         {mensaje && (
-          <div className="game-toast">
-            {mensaje}
+          <div className={`game-toast game-toast-${mensajeTipo}`}>
+            <span className="game-toast-mark" aria-hidden="true">
+              {mensajeTipo === "peligro" ? "!" : mensajeTipo === "incorrecto" ? "−" : "✓"}
+            </span>
+            <span>{mensaje}</span>
           </div>
         )}
 

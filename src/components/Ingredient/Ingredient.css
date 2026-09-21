@@ -344,115 +344,149 @@
 ========================================= */
 
 .ingredient-collecting {
-  z-index: 60;
+  z-index: 80;
   pointer-events: none;
   cursor: default;
   animation: none !important;
+  transform: var(--freeze-transform, none) !important;
+  transition: none !important;
+  filter: none;
 }
 
 .ingredient-collecting .ingredient-flight {
+  position: relative;
+
   display: block;
   width: 100%;
   height: 100%;
 
   animation:
     ingredientFlyToCauldron
-    1.2s
-    cubic-bezier(0.16, 1, 0.3, 1)
+    0.92s
+    cubic-bezier(0.22, 0.72, 0.24, 1)
     forwards;
 
   transform-origin: center center;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
-.ingredient-collecting .ingredient-visual img {
+/* Aura que se enciende durante el trayecto. */
+.ingredient-flight-glow {
+  position: absolute;
+  inset: 12%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(210, 190, 255, 0.52) 0%,
+      rgba(155, 126, 222, 0.24) 42%,
+      transparent 72%
+    );
+
+  filter: blur(9px);
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.ingredient-collecting .ingredient-flight-glow {
+  animation: ingredientFlightGlow 0.92s ease-out forwards;
+}
+
+.ingredient-collecting .ingredient-visual {
+  animation: ingredientFlightSpin 0.92s ease-in-out forwards;
+}
+
+.ingredient-collecting .ingredient-visual img,
+.ingredient-collecting:hover .ingredient-visual img {
+  transform: none;
+
   filter:
     drop-shadow(
-      0 0 12px
-      rgba(155, 126, 222, 0.7)
+      0 0 10px
+      rgba(199, 174, 255, 0.78)
     )
     drop-shadow(
       0 0 24px
-      rgba(155, 126, 222, 0.3)
+      rgba(155, 126, 222, 0.38)
     );
 }
 
+/*
+ * La trayectoria se hace en dos momentos: primero gana altura
+ * y después cae suavemente hacia el centro del líquido.
+ * Al fijar el botón en la posición real del clic, el inicio del
+ * vuelo ya no salta a su posición original del tablero.
+ */
 @keyframes ingredientFlyToCauldron {
   0% {
-    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
     opacity: 1;
+    filter: brightness(1);
   }
 
-  12% {
+  14% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.08),
-        calc(var(--delta-y) * 0.08 - 18px),
+        calc(var(--delta-x) * 0.09),
+        calc(var(--delta-y) * 0.05 - var(--arc-height) * 0.38),
         0
       )
-      scale(1.06)
-      rotate(5deg);
+      scale(1.07);
     opacity: 1;
+    filter: brightness(1.12);
   }
 
-  30% {
+  36% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.25),
-        calc(var(--delta-y) * 0.25 - 32px),
+        calc(var(--delta-x) * 0.31),
+        calc(var(--delta-y) * 0.24 - var(--arc-height) * 0.78),
         0
       )
-      scale(1.03)
-      rotate(-5deg);
+      scale(1.02);
     opacity: 1;
+    filter: brightness(1.16);
   }
 
-  52% {
+  58% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.50),
-        calc(var(--delta-y) * 0.50 - 30px),
+        calc(var(--delta-x) * 0.58),
+        calc(var(--delta-y) * 0.52 - var(--arc-height)),
         0
       )
-      scale(0.93)
-      rotate(4deg);
+      scale(0.88);
     opacity: 1;
+    filter: brightness(1.12);
   }
 
-  72% {
+  77% {
     transform:
       translate3d(
-        calc(var(--delta-x) * 0.72),
-        calc(var(--delta-y) * 0.72 - 17px),
+        calc(var(--delta-x) * 0.79),
+        calc(var(--delta-y) * 0.76 - var(--arc-height) * 0.48),
         0
       )
-      scale(0.76)
-      rotate(-3deg);
+      scale(0.67);
+    opacity: 1;
+    filter: brightness(1.08);
+  }
+
+  91% {
+    transform:
+      translate3d(
+        calc(var(--delta-x) * 0.94),
+        calc(var(--delta-y) * 0.94 - 8px),
+        0
+      )
+      scale(0.42);
     opacity: 0.98;
-  }
-
-  88% {
-    transform:
-      translate3d(
-        calc(var(--delta-x) * 0.88),
-        calc(var(--delta-y) * 0.88 - 5px),
-        0
-      )
-      scale(0.58)
-      rotate(2deg);
-    opacity: 0.82;
-  }
-
-  96% {
-    transform:
-      translate3d(
-        calc(var(--delta-x) * 0.97),
-        calc(var(--delta-y) * 0.97),
-        0
-      )
-      scale(0.42)
-      rotate(-1deg);
-    opacity: 0.55;
+    filter: brightness(1.04);
   }
 
   100% {
@@ -462,9 +496,53 @@
         var(--delta-y),
         0
       )
-      scale(0.16)
-      rotate(0deg);
+      scale(0.12);
     opacity: 0;
+    filter: brightness(0.9);
+  }
+}
+
+@keyframes ingredientFlightSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  24% {
+    transform: rotate(7deg);
+  }
+
+  52% {
+    transform: rotate(-6deg);
+  }
+
+  78% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes ingredientFlightGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+
+  22% {
+    opacity: 0.9;
+    transform: scale(1.12);
+  }
+
+  72% {
+    opacity: 0.58;
+    transform: scale(0.84);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.35);
   }
 }
 

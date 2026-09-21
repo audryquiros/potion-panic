@@ -74,8 +74,10 @@
 }
 
 .recipe-image {
-  width: 68px;
-  height: 68px;
+  position: relative;
+
+  width: 92px;
+  height: 92px;
 
   flex-shrink: 0;
 
@@ -83,26 +85,62 @@
   align-items: center;
   justify-content: center;
 
-  overflow: hidden;
+  overflow: visible;
 
-  border: 1px solid #493b57;
-  border-radius: 14px;
+  border: 1px solid rgba(104, 80, 125, 0.7);
+  border-radius: 20px;
 
   background:
     radial-gradient(
-      circle,
-      rgba(155, 126, 222, 0.14),
-      transparent 72%
+      circle at 50% 45%,
+      rgba(155, 126, 222, 0.2),
+      rgba(53, 39, 69, 0.2) 48%,
+      rgba(15, 11, 21, 0.8) 100%
     );
 
   box-shadow:
-    inset 0 0 20px
-    rgba(155, 126, 222, 0.04);
+    inset 0 0 24px rgba(155, 126, 222, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+
+  isolation: isolate;
+}
+
+.recipe-image::before {
+  content: "";
+
+  position: absolute;
+  inset: 7px;
+
+  border: 1px solid rgba(155, 126, 222, 0.14);
+  border-radius: 15px;
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+.recipe-image::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+
+  width: 58px;
+  height: 12px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: rgba(155, 126, 222, 0.25);
+  filter: blur(10px);
+
+  pointer-events: none;
 }
 
 .recipe-image img {
-  width: 58px;
-  height: 58px;
+  width: 80px;
+  height: 80px;
 
   display: block;
 
@@ -110,9 +148,11 @@
 
   filter:
     drop-shadow(
-      0 5px 12px
-      rgba(0, 0, 0, 0.4)
+      0 7px 16px
+      rgba(0, 0, 0, 0.45)
     );
+
+  animation: recipePotionFloat 3.8s ease-in-out infinite;
 }
 
 .recipe-image span {
@@ -122,6 +162,17 @@
   font-weight: 700;
 
   letter-spacing: 0.1em;
+}
+
+@keyframes recipePotionFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(1deg);
+  }
 }
 
 .recipe-label {
@@ -491,43 +542,109 @@
 
 .game-toast {
   position: absolute;
-
   left: 50%;
   bottom: 125px;
+  z-index: 80;
+  min-width: 250px;
+  max-width: min(430px, calc(100% - 40px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid rgba(111, 86, 137, 0.75);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(31, 23, 40, 0.98), rgba(17, 13, 23, 0.98));
+  color: #ddd0e8;
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.38),
+    0 0 25px rgba(155, 126, 222, 0.09);
+  transform: translateX(-50%);
+  animation: toast-in 0.24s ease-out;
+}
 
-  z-index: 40;
+.game-toast-mark {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(155, 126, 222, 0.55);
+  border-radius: 50%;
+  background: rgba(155, 126, 222, 0.12);
+  color: #cbb8df;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
 
-  padding: 8px 16px;
+.game-toast-correcto {
+  border-color: rgba(118, 177, 151, 0.55);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.38), 0 0 25px rgba(102, 178, 142, 0.1);
+}
 
-  border: 1px solid #4a3b58;
-  border-radius: 999px;
+.game-toast-correcto .game-toast-mark,
+.game-toast-exito .game-toast-mark {
+  border-color: rgba(119, 184, 151, 0.6);
+  background: rgba(94, 161, 127, 0.14);
+  color: #9ed2b4;
+}
 
-  background:
-    rgba(22, 17, 29, 0.95);
+.game-toast-exito {
+  border-color: rgba(155, 126, 222, 0.75);
+}
 
-  color: #cdbde0;
+.game-toast-incorrecto {
+  border-color: rgba(194, 143, 86, 0.55);
+}
 
-  font-size: 0.7rem;
-  font-weight: 700;
+.game-toast-incorrecto .game-toast-mark {
+  border-color: rgba(205, 153, 91, 0.6);
+  background: rgba(180, 122, 60, 0.13);
+  color: #e1ad73;
+}
 
-  transform:
-    translateX(-50%);
-
+.game-toast-peligro {
+  border-color: rgba(196, 75, 96, 0.75);
+  background: linear-gradient(145deg, rgba(48, 19, 28, 0.98), rgba(22, 11, 17, 0.98));
+  color: #f0c7cf;
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.46),
+    0 0 28px rgba(194, 54, 78, 0.16);
   animation:
-    toast-in 0.2s ease-out;
+    toast-in 0.24s ease-out,
+    danger-toast-pulse 0.9s ease-in-out 0.24s 1;
+}
+
+.game-toast-peligro .game-toast-mark {
+  border-color: rgba(224, 88, 108, 0.75);
+  background: rgba(194, 54, 78, 0.18);
+  color: #ff9aaa;
 }
 
 @keyframes toast-in {
   from {
     opacity: 0;
-    transform:
-      translate(-50%, 8px);
+    transform: translate(-50%, 12px) scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform:
-      translate(-50%, 0);
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes danger-toast-pulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  35% {
+    transform: translateX(-50%) scale(1.035);
   }
 }
 
@@ -933,6 +1050,10 @@
 
   .game-toast {
     bottom: 105px;
+    min-width: 0;
+    width: min(360px, calc(100% - 24px));
+    padding: 11px 14px;
+    font-size: 0.68rem;
   }
 
   .game-result {
