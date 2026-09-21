@@ -171,8 +171,6 @@ function Game() {
   const [mensaje, setMensaje] = useState("");
   const [mensajeTipo, setMensajeTipo] = useState("normal");
 
-  const [feedback, setFeedback] =
-    useState(null);
 
   const [
     calderoReaccionando,
@@ -693,35 +691,6 @@ function Game() {
         );
 
     /*
-     * Feedback visual donde se hizo clic.
-     */
-    const mostrarFeedback = (
-      tipo,
-      texto
-    ) => {
-      const boardRect =
-        boardRef.current?.getBoundingClientRect();
-
-      setFeedback({
-        id: Date.now(),
-        tipo,
-        texto,
-        x: boardRect
-          ? event.clientX -
-            boardRect.left
-          : event.clientX,
-        y: boardRect
-          ? event.clientY -
-            boardRect.top
-          : event.clientY
-      });
-
-      window.setTimeout(() => {
-        setFeedback(null);
-      }, 900);
-    };
-
-    /*
      * Ingrediente peligroso.
      */
     if (ingrediente.peligroso) {
@@ -746,11 +715,6 @@ function Game() {
           Math.max(0, valor - 50)
       );
 
-      mostrarFeedback(
-        "peligro",
-        "-1 vida"
-      );
-
       setMensajeTipo("peligro");
       setMensaje(
         "¡Ingrediente peligroso! · -1 vida"
@@ -766,11 +730,6 @@ function Game() {
       setPuntos(
         (valor) =>
           Math.max(0, valor - 10)
-      );
-
-      mostrarFeedback(
-        "incorrecto",
-        "-10"
       );
 
       setMensajeTipo("incorrecto");
@@ -912,11 +871,6 @@ function Game() {
     setPuntos(
       (valor) =>
         valor + ingrediente.puntos
-    );
-
-    mostrarFeedback(
-      "correcto",
-      `+${ingrediente.puntos}`
     );
 
     setMensajeTipo("correcto");
@@ -1662,22 +1616,6 @@ function Game() {
         )}
 
         {/* =====================================
-            FEEDBACK DEL CLIC
-        ====================================== */}
-        {feedback && (
-          <div
-            key={feedback.id}
-            className={`interaction-feedback interaction-feedback-${feedback.tipo}`}
-            style={{
-              left: `${feedback.x}px`,
-              top: `${feedback.y}px`
-            }}
-          >
-            {feedback.texto}
-          </div>
-        )}
-
-        {/* =====================================
             PAUSA
         ====================================== */}
         {pausado && (
@@ -1732,22 +1670,49 @@ function Game() {
         ====================================== */}
         {estadoJuego ===
           "receta-completa" && (
-          <div className="game-overlay">
+          <div className="recipe-complete-overlay">
 
-            <div className="game-result">
+            <div className="recipe-magic-rings" aria-hidden="true">
+              <span className="magic-ring magic-ring-one"></span>
+              <span className="magic-ring magic-ring-two"></span>
+              <span className="magic-spark spark-one"></span>
+              <span className="magic-spark spark-two"></span>
+              <span className="magic-spark spark-three"></span>
+              <span className="magic-spark spark-four"></span>
+              <span className="magic-spark spark-five"></span>
+              <span className="magic-spark spark-six"></span>
+            </div>
 
-              <span className="result-label">
+            <div className="recipe-complete-card">
+              <div className="recipe-complete-icon">
+                <img
+                  src={recetaActual.imagen}
+                  alt=""
+                />
+              </div>
+
+              <span className="recipe-complete-label">
                 POCIÓN COMPLETADA
               </span>
 
-              <h2>
-                {recetaActual.nombre}
-              </h2>
+              <h2>{recetaActual.nombre}</h2>
 
-              <p>
-                Preparación exitosa.
+              <p className="recipe-complete-message">
+                La mezcla ha reaccionado correctamente.
               </p>
 
+              <div className="recipe-bonus">
+                <span>BONUS DE ALQUIMIA</span>
+                <strong>+100</strong>
+              </div>
+
+              <div className="recipe-progress-line">
+                <span></span>
+              </div>
+
+              <p className="recipe-next-message">
+                Preparando la siguiente mezcla...
+              </p>
             </div>
 
           </div>
