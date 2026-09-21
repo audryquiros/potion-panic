@@ -1,98 +1,801 @@
 .cauldron-area {
   position: absolute;
+
   left: 50%;
-  bottom: 28px;
-  z-index: 8;
+  bottom: 14px;
+
+  z-index: 20;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   transform: translateX(-50%);
+
+  pointer-events: none;
 }
+
+/* =========================
+   CALDERO
+========================= */
 
 .cauldron {
   position: relative;
-  width: 240px;
-  height: 155px;
+
+  width: 500px;
+  height: 160px;
 }
+
+/* =========================
+   BRILLO
+========================= */
 
 .cauldron-glow {
   position: absolute;
+
   left: 50%;
   bottom: 5px;
-  width: 225px;
-  height: 75px;
+
+  width: 440px;
+  height: 70px;
+
   transform: translateX(-50%);
+
   border-radius: 50%;
-  background: rgba(155, 126, 222, 0.15);
-  filter: blur(22px);
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(155, 126, 222, 0.35),
+      rgba(155, 126, 222, 0.12) 45%,
+      transparent 75%
+    );
+
+  filter: blur(15px);
+
+  opacity: 0.75;
+
+  transition:
+    background 0.6s ease,
+    opacity 0.4s ease;
 }
+
+/* =========================
+   CUERPO
+========================= */
 
 .cauldron-body {
   position: absolute;
+
   left: 50%;
-  bottom: 0;
-  width: 215px;
+  bottom: 13px;
+
+  width: 440px;
   height: 112px;
+
   transform: translateX(-50%);
-  overflow: hidden;
-  border: 2px solid #554364;
-  border-radius: 28px 28px 55px 55px;
-  background: linear-gradient(145deg, #40354b, #211a29);
+
+  overflow: visible;
+
+  border: 2px solid #604b70;
+  border-radius:
+    24px
+    24px
+    45px
+    45px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #51435b 0%,
+      #302538 38%,
+      #1b1622 100%
+    );
+
   box-shadow:
-    inset 0 8px 15px rgba(255, 255, 255, 0.04),
-    0 15px 35px rgba(0, 0, 0, 0.4);
+    inset 0 8px 14px
+      rgba(255, 255, 255, 0.055),
+
+    inset 0 -18px 28px
+      rgba(0, 0, 0, 0.42),
+
+    0 14px 30px
+      rgba(0, 0, 0, 0.5);
 }
+
+/* brillo metálico */
 
 .cauldron-body::before {
   content: "";
+
   position: absolute;
-  top: -15px;
-  left: 50%;
-  width: 224px;
-  height: 36px;
-  transform: translateX(-50%);
-  border: 2px solid #5e4c70;
+
+  left: 12px;
+  top: 13px;
+
+  width: 180px;
+  height: 45px;
+
   border-radius: 50%;
-  background: #17131e;
-  z-index: 2;
+
+  background:
+    linear-gradient(
+      130deg,
+      rgba(255,255,255,0.1),
+      transparent
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
+
+  z-index: 7;
 }
+
+/* sombra inferior */
+
+.cauldron-body::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 3px;
+
+  width: 82%;
+  height: 15px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(0, 0, 0, 0.28);
+
+  filter: blur(5px);
+
+  pointer-events: none;
+
+  z-index: 8;
+}
+
+/* =========================
+   ARO DEL CALDERO
+========================= */
+
+.cauldron-rim {
+  position: absolute;
+
+  left: 50%;
+  top: -17px;
+
+  width: 452px;
+  height: 42px;
+
+  transform: translateX(-50%);
+
+  border:
+    3px solid #6b577a;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      180deg,
+      #29202f,
+      #120f17
+    );
+
+  box-shadow:
+    inset 0 5px 7px
+      rgba(255,255,255,0.06),
+
+    0 4px 10px
+      rgba(0,0,0,0.4);
+
+  z-index: 5;
+}
+
+/* =========================
+   LÍQUIDO
+========================= */
 
 .cauldron-liquid {
   position: absolute;
-  top: 0;
+
   left: 50%;
-  width: 185px;
-  height: 34px;
+  top: -5px;
+
+  width: 390px;
+  height: 40px;
+
   transform: translateX(-50%);
+
+  overflow: hidden;
+
   border-radius: 50%;
+
   background:
     radial-gradient(
-      circle at 35% 40%,
-      #c9b3ec,
-      #8064aa 45%,
-      #4f3970 100%
+      ellipse at 35% 35%,
+      color-mix(
+        in srgb,
+        var(--liquid-color) 90%,
+        white
+      ),
+      var(--liquid-color) 45%,
+      color-mix(
+        in srgb,
+        var(--liquid-color) 55%,
+        black
+      )
     );
+
+  border:
+    2px solid
+    color-mix(
+      in srgb,
+      var(--liquid-color) 70%,
+      white
+    );
+
   box-shadow:
-    0 0 18px rgba(155, 126, 222, 0.5),
-    0 0 35px rgba(155, 126, 222, 0.2);
+    0 0 12px
+      color-mix(
+        in srgb,
+        var(--liquid-color) 60%,
+        transparent
+      ),
+
+    0 0 28px
+      color-mix(
+        in srgb,
+        var(--liquid-color) 28%,
+        transparent
+      );
+
+  z-index: 6;
+
+  transition:
+    background 0.7s ease,
+    border-color 0.7s ease,
+    box-shadow 0.7s ease;
 }
 
+/* =========================
+   SUPERFICIE DEL LÍQUIDO
+========================= */
+
+.liquid-surface {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse at 28% 28%,
+      rgba(255,255,255,0.25),
+      transparent 22%
+    ),
+
+    radial-gradient(
+      ellipse at 65% 65%,
+      rgba(0,0,0,0.22),
+      transparent 55%
+    );
+}
+
+/* =========================
+   REFLEJO
+========================= */
+
+.liquid-highlight {
+  position: absolute;
+
+  left: 15%;
+  top: 8px;
+
+  width: 90px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.18);
+
+  filter: blur(2px);
+
+  transform: rotate(-5deg);
+}
+
+/* =========================
+   SOMBRA INTERIOR
+========================= */
+
+.cauldron-inner-shadow {
+  position: absolute;
+
+  left: 50%;
+  top: 7px;
+
+  width: 405px;
+  height: 65px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  box-shadow:
+    inset 0 -22px 25px
+      rgba(0,0,0,0.25);
+
+  pointer-events: none;
+
+  z-index: 9;
+}
+
+/* =========================
+   BURBUJAS
+========================= */
+
+.cauldron-bubbles {
+  position: absolute;
+
+  left: 50%;
+  top: 4px;
+
+  width: 280px;
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+
+  z-index: 12;
+}
+
+.cauldron-bubbles span {
+  position: absolute;
+
+  bottom: 5px;
+
+  width: 6px;
+  height: 6px;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.45);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.12);
+
+  opacity: 0;
+}
+
+.cauldron-bubbles span:nth-child(1) {
+  left: 18%;
+}
+
+.cauldron-bubbles span:nth-child(2) {
+  left: 30%;
+}
+
+.cauldron-bubbles span:nth-child(3) {
+  left: 43%;
+}
+
+.cauldron-bubbles span:nth-child(4) {
+  left: 56%;
+}
+
+.cauldron-bubbles span:nth-child(5) {
+  left: 70%;
+}
+
+/* =========================
+   SPLASH
+========================= */
+
+.cauldron-splash {
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  width: 360px;
+  height: 100px;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+
+  z-index: 35;
+}
+
+.cauldron-splash span {
+  position: absolute;
+
+  left: 50%;
+  top: 48px;
+
+  width: 9px;
+  height: 18px;
+
+  border-radius:
+    50%
+    50%
+    45%
+    45%;
+
+  background:
+    var(--liquid-color, #9b7ede);
+
+  opacity: 0;
+
+  transform:
+    translate(-50%, 0)
+    scale(0.4);
+}
+
+/* al reaccionar */
+
+.cauldron-reacting
+.cauldron-splash span {
+  animation:
+    splashDrop
+    0.75s
+    cubic-bezier(.2,.8,.3,1)
+    forwards;
+}
+
+.cauldron-splash span:nth-child(1) {
+  --splash-x: -125px;
+  --splash-y: -30px;
+}
+
+.cauldron-splash span:nth-child(2) {
+  --splash-x: -90px;
+  --splash-y: -48px;
+}
+
+.cauldron-splash span:nth-child(3) {
+  --splash-x: -52px;
+  --splash-y: -65px;
+}
+
+.cauldron-splash span:nth-child(4) {
+  --splash-x: -18px;
+  --splash-y: -78px;
+}
+
+.cauldron-splash span:nth-child(5) {
+  --splash-x: 24px;
+  --splash-y: -70px;
+}
+
+.cauldron-splash span:nth-child(6) {
+  --splash-x: 60px;
+  --splash-y: -55px;
+}
+
+.cauldron-splash span:nth-child(7) {
+  --splash-x: 95px;
+  --splash-y: -35px;
+}
+
+.cauldron-splash span:nth-child(8) {
+  --splash-x: 130px;
+  --splash-y: -20px;
+}
+
+@keyframes splashDrop {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, 10px)
+      scale(0.35);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0.9;
+
+    transform:
+      translate(
+        calc(-50% + var(--splash-x)),
+        var(--splash-y)
+      )
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(-50% + var(--splash-x)),
+        calc(var(--splash-y) + 18px)
+      )
+      scale(0.55);
+  }
+}
+
+/* =========================
+   REACCIÓN
+========================= */
+
+.cauldron-reacting
+.cauldron-body {
+  animation:
+    cauldronShake
+    0.65s
+    ease-in-out;
+}
+
+.cauldron-reacting
+.cauldron-glow {
+  animation:
+    cauldronGlow
+    0.8s
+    ease-out;
+}
+
+.cauldron-reacting
+.cauldron-liquid {
+  animation:
+    liquidSplash
+    0.8s
+    ease-out;
+}
+
+.cauldron-reacting
+.liquid-surface {
+  animation:
+    liquidWave
+    0.8s
+    ease-out;
+}
+
+.cauldron-reacting
+.cauldron-bubbles span {
+  animation:
+    bubbleRise
+    0.9s
+    ease-out
+    forwards;
+}
+
+@keyframes cauldronShake {
+  0%, 100% {
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+  20% {
+    transform:
+      translateX(-50%)
+      translateY(-3px)
+      rotate(-0.6deg);
+  }
+
+  40% {
+    transform:
+      translateX(-50%)
+      translateY(2px)
+      rotate(0.7deg);
+  }
+
+  60% {
+    transform:
+      translateX(-50%)
+      translateY(-2px)
+      rotate(-0.45deg);
+  }
+
+  80% {
+    transform:
+      translateX(-50%)
+      translateY(1px)
+      rotate(0.25deg);
+  }
+}
+
+@keyframes cauldronGlow {
+  0% {
+    opacity: 0.55;
+
+    transform:
+      translateX(-50%)
+      scale(0.9);
+  }
+
+  45% {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      scale(1.16);
+  }
+
+  100% {
+    opacity: 0.72;
+
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+}
+
+@keyframes liquidSplash {
+  0% {
+    transform:
+      translateX(-50%)
+      scaleX(1)
+      scaleY(1);
+  }
+
+  25% {
+    transform:
+      translateX(-50%)
+      scaleX(1.08)
+      scaleY(1.3);
+  }
+
+  48% {
+    transform:
+      translateX(-50%)
+      scaleX(0.94)
+      scaleY(0.88);
+  }
+
+  70% {
+    transform:
+      translateX(-50%)
+      scaleX(1.04)
+      scaleY(1.08);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scaleX(1)
+      scaleY(1);
+  }
+}
+
+@keyframes liquidWave {
+  0% {
+    transform:
+      scaleX(1);
+  }
+
+  35% {
+    transform:
+      scaleX(1.14)
+      rotate(-1deg);
+  }
+
+  65% {
+    transform:
+      scaleX(0.92)
+      rotate(1deg);
+  }
+
+  100% {
+    transform:
+      scaleX(1);
+  }
+}
+
+@keyframes bubbleRise {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(5px)
+      scale(0.5);
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-43px)
+      scale(1.2);
+  }
+}
+
+/* =========================
+   PATAS
+========================= */
+
+.cauldron-leg {
+  position: absolute;
+
+  bottom: 4px;
+
+  width: 42px;
+  height: 22px;
+
+  border-radius:
+    0 0 12px 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #211a29,
+      #44364d,
+      #211a29
+    );
+
+  box-shadow:
+    0 5px 8px
+    rgba(0,0,0,0.35);
+}
+
+.cauldron-leg-left {
+  left: 72px;
+
+  transform:
+    rotate(5deg);
+}
+
+.cauldron-leg-right {
+  right: 72px;
+
+  transform:
+    rotate(-5deg);
+}
+
+/* =========================
+   TEXTO
+========================= */
+
 .cauldron-label {
-  margin-top: 10px;
+  margin-top: 2px;
+
   color: #8d7c9f;
-  font-size: 0.72rem;
+
+  font-size: 0.68rem;
   font-weight: 700;
+
   letter-spacing: 0.12em;
+
   text-transform: uppercase;
 }
 
-@media (max-width: 600px) {
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
   .cauldron {
-    transform: scale(0.85);
-    transform-origin: bottom center;
+    transform: scale(0.72);
+
+    transform-origin:
+      bottom center;
   }
 
   .cauldron-area {
-    bottom: 18px;
+    bottom: 10px;
   }
-} 
+}
+
+@media (max-width: 500px) {
+  .cauldron {
+    transform: scale(0.58);
+  }
+}

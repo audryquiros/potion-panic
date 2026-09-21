@@ -33,14 +33,16 @@
   position: relative;
   z-index: 15;
 
-  min-height: 150px;
+  height: 220px;
+  min-height: 220px;
+  max-height: 220px;
 
   display: grid;
-  grid-template-columns: minmax(260px, 0.85fr) minmax(420px, 1.4fr);
+  grid-template-columns: minmax(280px, 0.72fr) minmax(520px, 1.6fr);
 
-  gap: 30px;
+  gap: 24px;
 
-  padding: 18px 28px;
+  padding: 14px 28px;
 
   border-bottom: 1px solid #302638;
 
@@ -155,16 +157,19 @@
 
   color: #82758d;
 
-  font-size: 0.72rem;
+  font-size: 0.67rem;
   line-height: 1.5;
 }
 
 .recipe-list-area {
   min-width: 0;
+  min-height: 0;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  overflow: hidden;
 }
 
 .recipe-list-title {
@@ -172,7 +177,7 @@
 
   color: #756981;
 
-  font-size: 0.6rem;
+  font-size: 0.56rem;
   font-weight: 700;
 
   letter-spacing: 0.1em;
@@ -185,22 +190,46 @@
 
   grid-template-columns:
     repeat(
-      2,
-      minmax(170px, 1fr)
+      3,
+      minmax(0, 1fr)
     );
 
-  gap: 8px;
+  grid-auto-rows: 48px;
+
+  gap: 7px;
+
+  max-height: 158px;
+  overflow-y: auto;
+
+  padding-right: 4px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #4b3a59 transparent;
+}
+
+.recipe-ingredients::-webkit-scrollbar {
+  width: 5px;
+}
+
+.recipe-ingredients::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.recipe-ingredients::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #4b3a59;
 }
 
 .recipe-ingredient {
-  min-height: 54px;
+  min-height: 48px;
+  height: 48px;
 
   display: flex;
   align-items: center;
 
-  gap: 10px;
+  gap: 8px;
 
-  padding: 7px 10px;
+  padding: 5px 8px;
 
   border: 1px solid #40354b;
   border-radius: 10px;
@@ -216,8 +245,8 @@
 }
 
 .recipe-ingredient-image {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
 
   flex-shrink: 0;
 
@@ -255,7 +284,7 @@
 
   color: #d8c8f2;
 
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
 
   text-overflow: ellipsis;
@@ -398,11 +427,17 @@
   align-items: flex-start;
   justify-content: space-between;
 
+  pointer-events: auto;
+}
+
+.board-header > div:first-child {
   pointer-events: none;
 }
 
-.board-header > div {
-  pointer-events: none;
+.board-header > .board-actions {
+  pointer-events: auto;
+  position: relative;
+  z-index: 12;
 }
 
 .board-header span {
@@ -452,6 +487,24 @@
   background: #1c1524;
 
   color: #c8b5d2;
+}
+
+
+.game-board::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 9, 16, 0),
+    rgba(12, 9, 16, 0.2) 55%,
+    rgba(12, 9, 16, 0.58)
+  );
 }
 
 /* =========================
@@ -624,6 +677,123 @@
   color: #c9b7d2;
 }
 
+
+/* =========================
+   ACCIONES DEL JUEGO
+========================= */
+
+.board-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  pointer-events: auto;
+}
+
+.pause-button {
+  padding: 7px 13px;
+  border: 1px solid #624b73;
+  border-radius: 8px;
+  background: rgba(42, 29, 53, 0.95);
+  color: #bda9ca;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pause-button:hover {
+  border-color: #8a6aa0;
+  background: #30213c;
+  color: #e0d1e8;
+}
+
+/* =========================
+   PAUSA
+========================= */
+
+.pause-overlay {
+  position: absolute;
+  pointer-events: auto;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 6, 11, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.pause-card {
+  width: min(380px, 100%);
+  padding: 30px;
+  border: 1px solid #4b3a57;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1b1522, #100c15);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.pause-label {
+  color: #806d91;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.pause-card h2 {
+  margin: 9px 0 6px;
+  color: #e1d3e9;
+  font-size: 1.5rem;
+}
+
+.pause-card p {
+  margin: 0;
+  color: #8e8096;
+  font-size: 0.78rem;
+}
+
+.pause-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.resume-button,
+.pause-exit-button {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 9px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.resume-button {
+  border: 1px solid #75558b;
+  background: #382546;
+  color: #dfcdea;
+}
+
+.resume-button:hover {
+  border-color: #9774ac;
+  background: #483054;
+}
+
+.pause-exit-button {
+  border: 1px solid #3d3147;
+  background: transparent;
+  color: #918399;
+}
+
+.pause-exit-button:hover {
+  background: #1b1521;
+  color: #c8b7d1;
+}
+
 /* =========================
    MESSAGE PAGE
 ========================= */
@@ -701,9 +871,9 @@
 
 @media (max-width: 900px) {
   .recipe-panel {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1.5fr;
 
-    gap: 12px;
+    gap: 14px;
 
     padding: 14px 18px;
   }
@@ -733,13 +903,15 @@
 
 @media (max-width: 600px) {
   .recipe-panel {
+    height: 250px;
+    min-height: 250px;
     max-height: 250px;
-
-    overflow-y: auto;
   }
 
   .recipe-ingredients {
     grid-template-columns: 1fr;
+    grid-auto-rows: 48px;
+    max-height: 190px;
   }
 
   .recipe-heading {
@@ -788,8 +960,14 @@
     font-size: 0.72rem;
   }
 
+  .board-actions {
+    gap: 5px;
+  }
+
+  .pause-button,
   .exit-button {
-    padding: 6px 10px;
+    padding: 6px 9px;
+    font-size: 0.58rem;
   }
 
   .game-toast {
@@ -798,5 +976,49 @@
 
   .game-result {
     padding: 22px;
+  }
+}
+
+/* =========================================
+   FEEDBACK DE INTERACCIÓN
+========================================= */
+
+.interaction-feedback {
+  position: absolute;
+  z-index: 42;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+  animation: interactionFeedback 0.9s ease-out forwards;
+}
+
+.interaction-feedback-correct {
+  color: #cdb9ec;
+}
+
+.interaction-feedback-incorrect {
+  color: #e3a1b0;
+}
+
+.interaction-feedback-peligro {
+  color: #ff8c9c;
+  font-size: 1rem;
+}
+
+@keyframes interactionFeedback {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30%) scale(0.7);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -145%) scale(0.92);
   }
 }

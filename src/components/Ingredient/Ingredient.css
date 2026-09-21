@@ -1,19 +1,16 @@
 .floating-ingredient {
   position: absolute;
-
   z-index: 5;
 
-  width: 76px;
-  height: 76px;
+  width: 64px;
+  height: 64px;
 
   padding: 0;
-
   border: 0;
 
   background: transparent;
 
   cursor: pointer;
-
   appearance: none;
 
   transition:
@@ -34,6 +31,10 @@
   opacity: 1;
 }
 
+/* =========================================
+   CONTENEDORES DEL INGREDIENTE
+========================================= */
+
 .ingredient-flight {
   display: block;
 
@@ -42,14 +43,14 @@
 }
 
 .ingredient-visual {
-  width: 76px;
-  height: 76px;
+  position: relative;
+
+  width: 64px;
+  height: 64px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  position: relative;
 }
 
 .ingredient-visual img {
@@ -74,6 +75,10 @@
     transform 0.2s ease;
 }
 
+/* =========================================
+   HOVER
+========================================= */
+
 .floating-ingredient:hover
 .ingredient-visual img {
   filter:
@@ -90,7 +95,7 @@
 }
 
 /* =========================================
-   MOVIMIENTO
+   MOVIMIENTO NORMAL
 ========================================= */
 
 .ingredient-motion-0 {
@@ -98,7 +103,10 @@
     ingredientFloat0
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-1 {
@@ -106,7 +114,10 @@
     ingredientFloat1
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-2 {
@@ -114,7 +125,10 @@
     ingredientFloat2
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-3 {
@@ -122,7 +136,10 @@
     ingredientFloat3
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-4 {
@@ -130,7 +147,10 @@
     ingredientFloat4
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-5 {
@@ -138,7 +158,10 @@
     ingredientFloat5
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-6 {
@@ -146,7 +169,10 @@
     ingredientFloat6
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 .ingredient-motion-7 {
@@ -154,7 +180,10 @@
     ingredientFloat7
     var(--movement-speed)
     ease-in-out
-    infinite alternate;
+    infinite;
+
+  animation-delay:
+    var(--movement-delay);
 }
 
 /* =========================================
@@ -163,45 +192,89 @@
 
 @keyframes ingredientFloat0 {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0)
+      rotate(0deg);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(90px * var(--movement-scale)),
+        calc(35px * var(--movement-scale))
+      )
+      rotate(5deg);
   }
 
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(35px * var(--movement-scale))
-      );
+        calc(145px * var(--movement-scale)),
+        calc(82px * var(--movement-scale))
+      )
+      rotate(-4deg);
   }
 
-  100% {
+  75% {
     transform:
       translate(
-        calc(30px * var(--movement-scale)),
-        calc(75px * var(--movement-scale))
-      );
-  }
-}
-
-@keyframes ingredientFloat1 {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform:
-      translate(
-        calc(-65px * var(--movement-scale)),
-        calc(35px * var(--movement-scale))
-      );
+        calc(55px * var(--movement-scale)),
+        calc(48px * var(--movement-scale))
+      )
+      rotate(3deg);
   }
 
   100% {
     transform:
       translate(
         calc(-25px * var(--movement-scale)),
-        calc(70px * var(--movement-scale))
-      );
+        calc(82px * var(--movement-scale))
+      )
+      rotate(0deg);
+  }
+}
+
+@keyframes ingredientFloat1 {
+  0% {
+    transform:
+      translate(0, 0)
+      rotate(0deg);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(-90px * var(--movement-scale)),
+        calc(45px * var(--movement-scale))
+      )
+      rotate(-5deg);
+  }
+
+  50% {
+    transform:
+      translate(
+        calc(-145px * var(--movement-scale)),
+        calc(85px * var(--movement-scale))
+      )
+      rotate(4deg);
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(-55px * var(--movement-scale)),
+        calc(25px * var(--movement-scale))
+      )
+      rotate(-3deg);
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-20px * var(--movement-scale)),
+        calc(90px * var(--movement-scale))
+      )
+      rotate(0deg);
   }
 }
 
@@ -210,19 +283,35 @@
     transform: translate(0, 0);
   }
 
+  25% {
+    transform:
+      translate(
+        calc(-82px * var(--movement-scale)),
+        calc(20px * var(--movement-scale))
+      );
+  }
+
   50% {
     transform:
       translate(
-        calc(-65px * var(--movement-scale)),
-        calc(30px * var(--movement-scale))
+        calc(-140px * var(--movement-scale)),
+        calc(55px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(-88px * var(--movement-scale)),
+        calc(92px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-80px * var(--movement-scale)),
-        calc(70px * var(--movement-scale))
+        calc(-20px * var(--movement-scale)),
+        calc(40px * var(--movement-scale))
       );
   }
 }
@@ -232,76 +321,143 @@
     transform: translate(0, 0);
   }
 
+  25% {
+    transform:
+      translate(
+        calc(88px * var(--movement-scale)),
+        calc(-20px * var(--movement-scale))
+      );
+  }
+
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(-35px * var(--movement-scale))
+        calc(140px * var(--movement-scale)),
+        calc(-55px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(50px * var(--movement-scale)),
+        calc(-88px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(40px * var(--movement-scale)),
-        calc(-75px * var(--movement-scale))
+        calc(-15px * var(--movement-scale)),
+        calc(-35px * var(--movement-scale))
       );
   }
 }
 
 @keyframes ingredientFloat4 {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(-92px * var(--movement-scale)),
+        calc(-25px * var(--movement-scale))
+      );
   }
 
   50% {
     transform:
       translate(
-        calc(-70px * var(--movement-scale)),
-        calc(-35px * var(--movement-scale))
+        calc(-140px * var(--movement-scale)),
+        calc(-82px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(-45px * var(--movement-scale)),
+        calc(-45px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-35px * var(--movement-scale)),
-        calc(-80px * var(--movement-scale))
+        calc(10px * var(--movement-scale)),
+        calc(-15px * var(--movement-scale))
       );
   }
 }
 
 @keyframes ingredientFloat5 {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(82px * var(--movement-scale)),
+        calc(30px * var(--movement-scale))
+      );
   }
 
   50% {
     transform:
       translate(
-        calc(65px * var(--movement-scale)),
-        calc(40px * var(--movement-scale))
+        calc(140px * var(--movement-scale)),
+        calc(82px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(60px * var(--movement-scale)),
+        calc(98px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(30px * var(--movement-scale)),
-        calc(80px * var(--movement-scale))
+        calc(-25px * var(--movement-scale)),
+        calc(45px * var(--movement-scale))
       );
   }
 }
 
 @keyframes ingredientFloat6 {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(-92px * var(--movement-scale)),
+        calc(35px * var(--movement-scale))
+      );
   }
 
   50% {
     transform:
       translate(
-        calc(-75px * var(--movement-scale)),
+        calc(-140px * var(--movement-scale)),
+        calc(88px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(-25px * var(--movement-scale)),
         calc(45px * var(--movement-scale))
       );
   }
@@ -309,186 +465,244 @@
   100% {
     transform:
       translate(
-        calc(55px * var(--movement-scale)),
-        calc(-60px * var(--movement-scale))
+        calc(88px * var(--movement-scale)),
+        calc(-10px * var(--movement-scale))
       );
   }
 }
 
 @keyframes ingredientFloat7 {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
+  }
+
+  25% {
+    transform:
+      translate(
+        calc(98px * var(--movement-scale)),
+        calc(-35px * var(--movement-scale))
+      );
   }
 
   50% {
     transform:
       translate(
-        calc(70px * var(--movement-scale)),
-        calc(-40px * var(--movement-scale))
+        calc(140px * var(--movement-scale)),
+        calc(-82px * var(--movement-scale))
+      );
+  }
+
+  75% {
+    transform:
+      translate(
+        calc(45px * var(--movement-scale)),
+        calc(-98px * var(--movement-scale))
       );
   }
 
   100% {
     transform:
       translate(
-        calc(-60px * var(--movement-scale)),
-        calc(65px * var(--movement-scale))
+        calc(-55px * var(--movement-scale)),
+        calc(-35px * var(--movement-scale))
       );
   }
 }
 
 /* =========================================
-   INGREDIENTE QUE VA HACIA EL CALDERO
+   PAUSA
+========================================= */
+
+.ingredient-paused {
+  animation-play-state: paused !important;
+}
+
+/* =========================================
+   INGREDIENTE VIAJANDO AL CALDERO
 ========================================= */
 
 .ingredient-collecting {
-  z-index: 30;
+  z-index: 50;
 
   pointer-events: none;
 
-  cursor: default;
+  /*
+   * Desactivamos el movimiento normal.
+   */
+  animation: none !important;
 
-  animation: none;
-}
-
-.ingredient-collecting
-.ingredient-flight {
-  display: block;
+  /*
+   * La animación se realiza sobre
+   * el botón completo.
+   */
+  transform-origin: center center;
 
   animation:
-    ingredientMove
-    1.2s
-    cubic-bezier(
-      0.45,
-      0,
-      0.25,
-      1
-    )
-    forwards;
-
-  will-change:
-    transform,
-    opacity;
+    ingredientFlyToCauldron
+    0.9s
+    cubic-bezier(0.45, 0, 0.2, 1)
+    forwards !important;
 }
 
-.ingredient-collecting
-.ingredient-visual img {
-  animation:
-    ingredientShrink
-    1.2s
-    ease-in-out
-    forwards;
+/*
+ * Mientras vuela:
+ * - sale de su posición actual
+ * - se dirige al centro del caldero
+ * - se hace ligeramente más pequeño
+ * - gira
+ */
+@keyframes ingredientFlyToCauldron {
 
-  filter:
-    drop-shadow(
-      0 0 14px
-      rgba(155, 126, 222, 0.65)
-    )
-    drop-shadow(
-      0 0 28px
-      rgba(155, 126, 222, 0.3)
-    );
-
-  will-change:
-    transform,
-    filter;
-}
-
-@keyframes ingredientMove {
   0% {
     transform:
-      translate(0, 0);
+      translate(
+        0,
+        0
+      )
+      scale(1)
+      rotate(0deg);
 
     opacity: 1;
   }
 
-  45% {
+  15% {
     transform:
       translate(
-        var(--center-x),
-        var(--center-y)
-      );
+        calc(
+          (
+            var(--cauldron-x)
+            -
+            var(--center-x)
+          ) * 0.12
+        ),
+        calc(
+          (
+            var(--cauldron-y)
+            -
+            var(--center-y)
+          ) * 0.12
+        )
+      )
+      scale(1.08)
+      rotate(12deg);
 
     opacity: 1;
   }
 
-  55% {
+  40% {
     transform:
       translate(
-        var(--center-x),
-        var(--center-y)
-      );
+        calc(
+          (
+            var(--cauldron-x)
+            -
+            var(--center-x)
+          ) * 0.42
+        ),
+        calc(
+          (
+            var(--cauldron-y)
+            -
+            var(--center-y)
+          ) * 0.42
+        )
+      )
+      scale(0.92)
+      rotate(-18deg);
 
     opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(
+        calc(
+          (
+            var(--cauldron-x)
+            -
+            var(--center-x)
+          ) * 0.72
+        ),
+        calc(
+          (
+            var(--cauldron-y)
+            -
+            var(--center-y)
+          ) * 0.72
+        )
+      )
+      scale(0.72)
+      rotate(25deg);
+
+    opacity: 0.95;
+  }
+
+  90% {
+    transform:
+      translate(
+        calc(
+          var(--cauldron-x)
+          -
+          var(--center-x)
+        ),
+        calc(
+          var(--cauldron-y)
+          -
+          var(--center-y)
+        )
+      )
+      scale(0.55)
+      rotate(-10deg);
+
+    opacity: 0.85;
   }
 
   100% {
     transform:
       translate(
         calc(
-          var(--center-x) +
           var(--cauldron-x)
+          -
+          var(--center-x)
         ),
         calc(
-          var(--center-y) +
           var(--cauldron-y)
+          -
+          var(--center-y)
         )
-      );
+      )
+      scale(0.15)
+      rotate(0deg);
 
     opacity: 0;
   }
 }
 
-@keyframes ingredientShrink {
-  0% {
-    transform: scale(1);
-  }
+/*
+ * También hacemos que la imagen acompañe
+ * el movimiento sin aplicar otra transformación
+ * que pueda interferir.
+ */
+.ingredient-collecting
+.ingredient-visual img {
+  transform: none !important;
 
-  45% {
-    transform: scale(1);
-  }
-
-  55% {
-    transform: scale(0.96);
-  }
-
-  70% {
-    transform: scale(0.82);
-  }
-
-  85% {
-    transform: scale(0.58);
-  }
-
-  100% {
-    transform: scale(0.12);
-  }
+  filter:
+    drop-shadow(
+      0 0 12px
+      rgba(155, 126, 222, 0.7)
+    );
 }
 
 /* =========================================
-   RESPONSIVE
+   EFECTO AL SER SELECCIONADO
 ========================================= */
 
-@media (max-width: 700px) {
-  .floating-ingredient {
-    width: 64px;
-    height: 64px;
-  }
+.ingredient-collecting
+.ingredient-flight {
+  display: block;
 
-  .ingredient-visual {
-    width: 64px;
-    height: 64px;
-  }
-}
-
-@media (max-width: 500px) {
-  .floating-ingredient {
-    width: 56px;
-    height: 56px;
-  }
-
-  .ingredient-visual {
-    width: 56px;
-    height: 56px;
-  }
+  width: 100%;
+  height: 100%;
 }

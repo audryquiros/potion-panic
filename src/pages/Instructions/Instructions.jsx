@@ -5,30 +5,30 @@ function Instructions() {
   return (
     <main className="instructions-page">
       <section className="instructions-card">
-        <p className="page-label">HOW TO PLAY</p>
+        <p className="page-label">CÓMO JUGAR</p>
 
-        <h1>Instructions</h1>
+        <h1>Instrucciones</h1>
 
         <p>
-          Prepare the required potion by collecting the correct ingredients
-          before the timer reaches zero.
+          Prepara la poción indicada reuniendo los ingredientes correctos
+          antes de que el tiempo llegue a cero.
         </p>
 
         <ul>
-          <li>Identify the ingredients required by the recipe.</li>
-          <li>Click on the correct ingredients.</li>
-          <li>Watch them fall into the cauldron.</li>
-          <li>Avoid incorrect or dangerous ingredients.</li>
-          <li>Complete the potion before time runs out.</li>
+          <li>Identifica los ingredientes que necesita la receta.</li>
+          <li>Haz clic en los ingredientes correctos.</li>
+          <li>Observa cómo caen dentro del caldero.</li>
+          <li>Evita los ingredientes incorrectos o peligrosos.</li>
+          <li>Completa la poción antes de que se acabe el tiempo.</li>
         </ul>
 
         <div className="instructions-actions">
           <Link to="/" className="secondary-button">
-            Back to Home
+            Volver al inicio
           </Link>
 
           <Link to="/juego/1" className="primary-button">
-            Start Game
+            Comenzar juego
           </Link>
         </div>
       </section>

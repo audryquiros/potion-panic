@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import Ingredient from "../../components/Ingredient/Ingredient";
 import Cauldron from "../../components/Cauldron/Cauldron";
 import ScoreForm from "../../components/ScoreForm/ScoreForm";
+
 import {
   getIngredientes,
   getRecetas
 } from "../../services/api";
+
 import "./Game.css";
 
 const CONFIGURACION_NIVELES = {
@@ -38,32 +41,46 @@ const CONFIGURACION_NIVELES = {
 };
 
 const POSICIONES_INGREDIENTES = [
-  { top: "14%", left: "10%" },
-  { top: "13%", left: "38%" },
-  { top: "15%", left: "72%" },
-  { top: "38%", left: "22%" },
-  { top: "35%", left: "52%" },
-  { top: "42%", left: "78%" },
-  { top: "58%", left: "35%" },
-  { top: "60%", left: "65%" },
-  { top: "28%", left: "88%" },
-  { top: "62%", left: "12%" },
-  { top: "48%", left: "45%" },
-  { top: "25%", left: "60%" },
-  { top: "70%", left: "25%" },
-  { top: "68%", left: "78%" }
+  { top: "8%", left: "8%" },
+  { top: "10%", left: "30%" },
+  { top: "8%", left: "55%" },
+  { top: "11%", left: "78%" },
+  { top: "23%", left: "17%" },
+  { top: "21%", left: "41%" },
+  { top: "24%", left: "67%" },
+  { top: "28%", left: "87%" },
+  { top: "34%", left: "9%" },
+  { top: "32%", left: "31%" },
+  { top: "35%", left: "54%" },
+  { top: "36%", left: "77%" },
+  { top: "26%", left: "91%" },
+  { top: "38%", left: "20%" }
 ];
 
 const PATRONES_MOVIMIENTO = [
+  0,
   1,
   2,
   3,
   4,
   5,
   6,
-  7,
-  8
+  7
 ];
+
+/*
+ * Color del líquido según el ingrediente.
+ */
+const COLORES_LIQUIDO = {
+  1: "#8d6bc4", // Hongo Lunar
+  2: "#5c8fca", // Hierba Arcana
+  3: "#72d8e6", // Cristal Mágico
+  4: "#b05fd1", // Flor Nocturna
+  5: "#d5b85c", // Polvo Lunar
+  6: "#4f9b68", // Veneno
+  7: "#704c9d", // Raíz Sombría
+  8: "#c47c55"  // Escama de Dragón
+};
 
 function Game() {
   const { nivel } = useParams();
@@ -82,17 +99,24 @@ function Game() {
 
   const [indiceReceta, setIndiceReceta] = useState(0);
 
-  const [ingredientesRecogidos, setIngredientesRecogidos] =
-    useState([]);
+  const [
+    ingredientesRecogidos,
+    setIngredientesRecogidos
+  ] = useState([]);
 
-  const [ingredienteRecogiendo, setIngredienteRecogiendo] =
+  const [
+    ingredienteRecogiendo,
+    setIngredienteRecogiendo
+  ] = useState(null);
+
+  const [flyDistance, setFlyDistance] =
     useState(null);
-
-  const [flyDistance, setFlyDistance] = useState(null);
 
   const [puntos, setPuntos] = useState(() => {
     return Number(
-      sessionStorage.getItem("potionPanicPuntos") || 0
+      sessionStorage.getItem(
+        "potionPanicPuntos"
+      ) || 0
     );
   });
 
@@ -112,17 +136,36 @@ function Game() {
 
   const [mensaje, setMensaje] = useState("");
 
+  const [feedback, setFeedback] =
+    useState(null);
+
+  const [
+    calderoReaccionando,
+    setCalderoReaccionando
+  ] = useState(false);
+
+  /*
+   * Color actual del líquido del caldero.
+   */
+  const [liquidColor, setLiquidColor] =
+    useState("#8d6bc4");
+
   const [estadoJuego, setEstadoJuego] =
     useState("jugando");
 
-  const [nivelesCompletados, setNivelesCompletados] =
-    useState(() => {
-      return Number(
-        sessionStorage.getItem(
-          "potionPanicNivelesCompletados"
-        ) || 0
-      );
-    });
+  const [pausado, setPausado] =
+    useState(false);
+
+  const [
+    nivelesCompletados,
+    setNivelesCompletados
+  ] = useState(() => {
+    return Number(
+      sessionStorage.getItem(
+        "potionPanicNivelesCompletados"
+      ) || 0
+    );
+  });
 
   const configuracion =
     CONFIGURACION_NIVELES[nivelNumero];
@@ -131,52 +174,84 @@ function Game() {
     return recetas
       .filter(
         (receta) =>
-          Number(receta.nivel) === nivelNumero
+          Number(receta.nivel) ===
+          nivelNumero
       )
       .sort(
         (a, b) =>
-          Number(a.orden) - Number(b.orden)
+          Number(a.orden) -
+          Number(b.orden)
       );
   }, [recetas, nivelNumero]);
 
   const recetaActual =
     recetasDelNivel[indiceReceta];
 
-  const ingredientesDeLaReceta = useMemo(() => {
-    if (!recetaActual) return [];
+  const ingredientesDeLaReceta =
+    useMemo(() => {
+      if (!recetaActual) return [];
 
-    return recetaActual.ingredientes
-      .map((ingredienteId) =>
-        ingredientes.find(
-          (ingrediente) =>
-            Number(ingrediente.id) ===
-            Number(ingredienteId)
+      return recetaActual.ingredientes
+        .map((ingredienteId) =>
+          ingredientes.find(
+            (ingrediente) =>
+              Number(ingrediente.id) ===
+              Number(ingredienteId)
+          )
         )
-      )
-      .filter(Boolean);
-  }, [
-    recetaActual,
-    ingredientes
-  ]);
+        .filter(Boolean);
+    }, [
+      recetaActual,
+      ingredientes
+    ]);
 
-  const movementScale =
+  /*
+   * La dificultad aumenta:
+   *
+   * 1. Cada nivel aumenta el movimiento.
+   * 2. Cada receta dentro del nivel aumenta
+   *    un poco más la velocidad.
+   */
+  const movementScaleNivel =
     {
-      1: 0.55,
-      2: 0.7,
-      3: 0.85,
-      4: 1,
-      5: 1.15
-    }[nivelNumero] || 0.55;
+      1: 0.78,
+      2: 0.92,
+      3: 1.06,
+      4: 1.2,
+      5: 1.34
+    }[nivelNumero] || 0.78;
+
+  const movementScaleReceta =
+    [1, 1.12, 1.24][indiceReceta] ||
+    1;
+
+  const movementScale = Math.min(
+    movementScaleNivel *
+      movementScaleReceta,
+    1.6
+  );
+
+  const movementSpeedNivel =
+    {
+      1: 10.5,
+      2: 8.6,
+      3: 7,
+      4: 5.7,
+      5: 4.7
+    }[nivelNumero] || 10.5;
+
+  const movementSpeedReceta =
+    [1, 0.84, 0.7][indiceReceta] ||
+    1;
 
   const movementSpeed =
-    {
-      1: 12,
-      2: 9,
-      3: 7,
-      4: 5,
-      5: 3.8
-    }[nivelNumero] || 12;
+    movementSpeedNivel *
+    movementSpeedReceta;
 
+  /*
+   * Ingredientes que aparecen volando
+   * por el laboratorio.
+   */
   const ingredientesVolando = useMemo(() => {
     if (
       ingredientes.length === 0 ||
@@ -209,6 +284,10 @@ function Game() {
     ) {
       let ingrediente;
 
+      /*
+       * Siempre dejamos un ingrediente
+       * peligroso dentro del tablero.
+       */
       if (
         index === cantidad - 1 &&
         veneno
@@ -239,6 +318,9 @@ function Game() {
     indiceReceta
   ]);
 
+  /*
+   * Carga ingredientes y recetas desde json-server.
+   */
   useEffect(() => {
     let activo = true;
 
@@ -284,6 +366,9 @@ function Game() {
     };
   }, []);
 
+  /*
+   * Reinicia el estado cuando cambia el nivel.
+   */
   useEffect(() => {
     if (
       loading ||
@@ -297,9 +382,15 @@ function Game() {
     setIngredientesRecogidos([]);
     setIngredienteRecogiendo(null);
     setFlyDistance(null);
+
     setVidas(configuracion.vidas);
     setTiempo(configuracion.tiempo);
+
     setEstadoJuego("jugando");
+    setPausado(false);
+
+    setCalderoReaccionando(false);
+    setLiquidColor("#8d6bc4");
   }, [
     nivelNumero,
     loading,
@@ -307,9 +398,13 @@ function Game() {
     recetasDelNivel.length
   ]);
 
+  /*
+   * Temporizador.
+   */
   useEffect(() => {
     if (
       estadoJuego !== "jugando" ||
+      pausado ||
       !recetaActual
     ) {
       return;
@@ -337,9 +432,13 @@ function Game() {
   }, [
     tiempo,
     estadoJuego,
+    pausado,
     recetaActual
   ]);
 
+  /*
+   * Guarda los puntos durante la partida.
+   */
   useEffect(() => {
     if (puntos !== undefined) {
       sessionStorage.setItem(
@@ -349,6 +448,9 @@ function Game() {
     }
   }, [puntos]);
 
+  /*
+   * Guarda los niveles completados.
+   */
   useEffect(() => {
     sessionStorage.setItem(
       "potionPanicNivelesCompletados",
@@ -356,6 +458,9 @@ function Game() {
     );
   }, [nivelesCompletados]);
 
+  /*
+   * Toast de mensajes.
+   */
   useEffect(() => {
     if (!mensaje) return;
 
@@ -368,11 +473,15 @@ function Game() {
     };
   }, [mensaje]);
 
+  /*
+   * Maneja la selección de ingredientes.
+   */
   const handleCollectIngredient = (
     ingrediente,
     event
   ) => {
     if (
+      pausado ||
       estadoJuego !== "jugando" ||
       ingredienteRecogiendo
     ) {
@@ -386,6 +495,38 @@ function Game() {
           Number(ingrediente.id)
         );
 
+    /*
+     * Feedback visual donde se hizo clic.
+     */
+    const mostrarFeedback = (
+      tipo,
+      texto
+    ) => {
+      const boardRect =
+        boardRef.current?.getBoundingClientRect();
+
+      setFeedback({
+        id: Date.now(),
+        tipo,
+        texto,
+        x: boardRect
+          ? event.clientX -
+            boardRect.left
+          : event.clientX,
+        y: boardRect
+          ? event.clientY -
+            boardRect.top
+          : event.clientY
+      });
+
+      window.setTimeout(() => {
+        setFeedback(null);
+      }, 900);
+    };
+
+    /*
+     * Ingrediente peligroso.
+     */
     if (ingrediente.peligroso) {
       setVidas((valor) => {
         const nuevasVidas =
@@ -393,6 +534,7 @@ function Game() {
 
         if (nuevasVidas <= 0) {
           setEstadoJuego("derrota");
+
           setMensaje(
             "El veneno arruinó la poción."
           );
@@ -406,6 +548,11 @@ function Game() {
           Math.max(0, valor - 50)
       );
 
+      mostrarFeedback(
+        "peligro",
+        "-1 vida"
+      );
+
       setMensaje(
         "¡Ingrediente peligroso!"
       );
@@ -413,10 +560,18 @@ function Game() {
       return;
     }
 
+    /*
+     * Ingrediente que no pertenece a la receta.
+     */
     if (!esNecesario) {
       setPuntos(
         (valor) =>
           Math.max(0, valor - 10)
+      );
+
+      mostrarFeedback(
+        "incorrecto",
+        "-10"
       );
 
       setMensaje(
@@ -426,6 +581,9 @@ function Game() {
       return;
     }
 
+    /*
+     * Evita recoger dos veces el mismo ingrediente.
+     */
     if (
       ingredientesRecogidos
         .map(Number)
@@ -445,6 +603,10 @@ function Game() {
     const boardElement =
       boardRef.current;
 
+    /*
+     * Calculamos la trayectoria desde
+     * el ingrediente hasta el caldero.
+     */
     if (
       ingredientElement &&
       cauldronElement &&
@@ -474,9 +636,13 @@ function Game() {
         cauldronRect.width / 2 -
         boardRect.left;
 
+      /*
+       * Apuntamos hacia la parte superior
+       * del caldero, donde está el líquido.
+       */
       const cauldronY =
         cauldronRect.top +
-        cauldronRect.height / 2 -
+        cauldronRect.height * 0.28 -
         boardRect.top;
 
       setFlyDistance({
@@ -487,20 +653,66 @@ function Game() {
       });
     }
 
+    /*
+     * Inicia la animación de vuelo.
+     */
     setIngredienteRecogiendo(
       ingrediente.instanceId
     );
 
+    /*
+     * Cambia el color del líquido según
+     * el ingrediente que acaba de entrar.
+     */
+    const nuevoColor =
+      COLORES_LIQUIDO[
+        Number(ingrediente.id)
+      ] || "#8d6bc4";
+
+    setLiquidColor(nuevoColor);
+
+    /*
+     * Suma los puntos inmediatamente.
+     */
     setPuntos(
       (valor) =>
         valor + ingrediente.puntos
+    );
+
+    mostrarFeedback(
+      "correcto",
+      `+${ingrediente.puntos}`
     );
 
     setMensaje(
       `+${ingrediente.puntos} puntos`
     );
 
-    setTimeout(() => {
+    /*
+     * IMPORTANTE:
+     * El caldero NO reacciona todavía.
+     *
+     * Esperamos a que termine la animación
+     * de vuelo de 900ms.
+     */
+    window.setTimeout(() => {
+      /*
+       * El ingrediente ya llegó al caldero.
+       * Ahora ocurre la reacción.
+       */
+      setCalderoReaccionando(true);
+
+      /*
+       * Apagamos la reacción después
+       * de terminar la animación.
+       */
+      window.setTimeout(() => {
+        setCalderoReaccionando(false);
+      }, 900);
+
+      /*
+       * Registramos el ingrediente como agregado.
+       */
       setIngredientesRecogidos(
         (anteriores) => [
           ...anteriores,
@@ -516,6 +728,10 @@ function Game() {
     }, 900);
   };
 
+  /*
+   * Comprueba si la receta actual
+   * ya tiene todos sus ingredientes.
+   */
   useEffect(() => {
     if (
       !recetaActual ||
@@ -542,6 +758,9 @@ function Game() {
       "receta-completa"
     );
 
+    /*
+     * Bonus por completar receta.
+     */
     setPuntos(
       (valor) => valor + 100
     );
@@ -554,6 +773,10 @@ function Game() {
       const siguienteReceta =
         indiceReceta + 1;
 
+      /*
+       * Todavía quedan recetas
+       * en el nivel actual.
+       */
       if (
         siguienteReceta <
         recetasDelNivel.length
@@ -562,9 +785,7 @@ function Game() {
           siguienteReceta
         );
 
-        setIngredientesRecogidos(
-          []
-        );
+        setIngredientesRecogidos([]);
 
         setTiempo(
           configuracion.tiempo
@@ -577,6 +798,9 @@ function Game() {
         return;
       }
 
+      /*
+       * Se completó todo el nivel.
+       */
       const nuevosNivelesCompletados =
         Math.max(
           nivelesCompletados,
@@ -587,6 +811,9 @@ function Game() {
         nuevosNivelesCompletados
       );
 
+      /*
+       * Todavía quedan niveles.
+       */
       if (nivelNumero < 5) {
         sessionStorage.setItem(
           "potionPanicNivelesCompletados",
@@ -600,6 +827,9 @@ function Game() {
         return;
       }
 
+      /*
+       * Nivel 5 terminado.
+       */
       setEstadoJuego(
         "victoria"
       );
@@ -611,7 +841,6 @@ function Game() {
   }, [
     ingredientesRecogidos,
     recetaActual,
-    estadoJuego,
     indiceReceta,
     recetasDelNivel.length,
     configuracion,
@@ -620,6 +849,70 @@ function Game() {
     navigate
   ]);
 
+  /*
+   * Pausar / continuar.
+   */
+  const togglePausa = () => {
+    if (
+      estadoJuego !== "jugando"
+    ) {
+      return;
+    }
+
+    setPausado(
+      (valor) => !valor
+    );
+  };
+
+  /*
+   * Atajo de teclado:
+   * barra espaciadora = pausa.
+   */
+  useEffect(() => {
+    const handleKeyDown = (
+      event
+    ) => {
+      if (
+        event.code !== "Space"
+      ) {
+        return;
+      }
+
+      const target =
+        event.target;
+
+      const tagName =
+        target?.tagName?.toLowerCase();
+
+      if (
+        tagName === "input" ||
+        tagName === "textarea" ||
+        tagName === "button"
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      togglePausa();
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, [estadoJuego]);
+
+  /*
+   * Salir al inicio.
+   */
   const volverAlInicio = () => {
     sessionStorage.removeItem(
       "potionPanicPuntos"
@@ -636,21 +929,51 @@ function Game() {
     navigate("/");
   };
 
+  /*
+   * Reiniciar nivel.
+   */
   const reiniciarNivel = () => {
     setIngredientesRecogidos([]);
-    setIngredienteRecogiendo(null);
+
+    setIngredienteRecogiendo(
+      null
+    );
+
     setFlyDistance(null);
-    setVidas(configuracion.vidas);
-    setTiempo(configuracion.tiempo);
+
+    setVidas(
+      configuracion.vidas
+    );
+
+    setTiempo(
+      configuracion.tiempo
+    );
+
     setEstadoJuego("jugando");
+
+    setPausado(false);
+
+    setCalderoReaccionando(
+      false
+    );
+
+    setLiquidColor("#8d6bc4");
+
+    setFeedback(null);
+
     setMensaje("");
   };
 
+  /*
+   * Nivel inválido.
+   */
   if (!configuracion) {
     return (
       <main className="game-page game-message-page">
         <div className="game-message-card">
-          <h1>Nivel no encontrado</h1>
+          <h1>
+            Nivel no encontrado
+          </h1>
 
           <button
             type="button"
@@ -665,6 +988,9 @@ function Game() {
     );
   }
 
+  /*
+   * Loading.
+   */
   if (loading) {
     return (
       <main className="game-page game-message-page">
@@ -673,7 +999,9 @@ function Game() {
             POTION PANIC
           </span>
 
-          <h1>Cargando laboratorio...</h1>
+          <h1>
+            Cargando laboratorio...
+          </h1>
 
           <p>
             Preparando ingredientes y
@@ -684,6 +1012,9 @@ function Game() {
     );
   }
 
+  /*
+   * Error.
+   */
   if (error) {
     return (
       <main className="game-page game-message-page">
@@ -692,7 +1023,9 @@ function Game() {
             ERROR
           </span>
 
-          <h1>No se pudo iniciar</h1>
+          <h1>
+            No se pudo iniciar
+          </h1>
 
           <p>{error}</p>
 
@@ -709,15 +1042,20 @@ function Game() {
     );
   }
 
+  /*
+   * No existen recetas para este nivel.
+   */
   if (!recetaActual) {
     return (
       <main className="game-page game-message-page">
         <div className="game-message-card">
-          <h1>No hay recetas</h1>
+          <h1>
+            No hay recetas
+          </h1>
 
           <p>
-            No se encontraron recetas para
-            este nivel.
+            No se encontraron recetas
+            para este nivel.
           </p>
 
           <button
@@ -735,9 +1073,16 @@ function Game() {
 
   return (
     <main className="game-page">
+
+      {/* =====================================
+          PANEL DE RECETA
+      ====================================== */}
       <section className="recipe-panel">
+
         <div className="recipe-info">
+
           <div className="recipe-heading">
+
             <div className="recipe-image">
               {recetaActual.imagen ? (
                 <img
@@ -747,17 +1092,22 @@ function Game() {
                   alt={
                     recetaActual.nombre
                   }
+                  onError={(event) => {
+                    event.currentTarget.style.display =
+                      "none";
+                  }}
                 />
               ) : (
                 <span>
-                  RECETA
+                  POCIÓN
                 </span>
               )}
             </div>
 
             <div>
               <span className="recipe-label">
-                Receta {indiceReceta + 1} de{" "}
+                Receta{" "}
+                {indiceReceta + 1} de{" "}
                 {recetasDelNivel.length}
               </span>
 
@@ -765,23 +1115,28 @@ function Game() {
                 {recetaActual.nombre}
               </h2>
             </div>
+
           </div>
 
           <p>
-            Encuentra todos los ingredientes
-            necesarios para preparar esta
-            poción.
+            Encuentra todos los
+            ingredientes necesarios
+            para preparar esta poción.
           </p>
+
         </div>
 
         <div className="recipe-list-area">
+
           <span className="recipe-list-title">
             Ingredientes necesarios
           </span>
 
           <div className="recipe-ingredients">
+
             {ingredientesDeLaReceta.map(
               (ingrediente) => {
+
                 const recogido =
                   ingredientesRecogidos
                     .map(Number)
@@ -793,13 +1148,16 @@ function Game() {
 
                 return (
                   <div
-                    key={ingrediente.id}
+                    key={
+                      ingrediente.id
+                    }
                     className={`recipe-ingredient ${
                       recogido
                         ? "recipe-ingredient-collected"
                         : ""
                     }`}
                   >
+
                     <div className="recipe-ingredient-image">
                       <img
                         src={
@@ -812,6 +1170,7 @@ function Game() {
                     </div>
 
                     <div className="recipe-ingredient-info">
+
                       <span className="recipe-ingredient-name">
                         {
                           ingrediente.nombre
@@ -829,32 +1188,50 @@ function Game() {
                           ? "Agregado"
                           : "Necesario"}
                       </span>
+
                     </div>
+
                   </div>
                 );
               }
             )}
+
           </div>
+
         </div>
+
       </section>
 
+      {/* =====================================
+          ESTADÍSTICAS
+      ====================================== */}
       <section className="game-stats">
+
         <div>
-          <span>NIVEL</span>
+          <span>
+            NIVEL
+          </span>
+
           <strong>
             {nivelNumero}
           </strong>
         </div>
 
         <div>
-          <span>PUNTOS</span>
+          <span>
+            PUNTOS
+          </span>
+
           <strong>
             {puntos}
           </strong>
         </div>
 
         <div>
-          <span>TIEMPO</span>
+          <span>
+            TIEMPO
+          </span>
+
           <strong
             className={
               tiempo <= 5
@@ -867,18 +1244,28 @@ function Game() {
         </div>
 
         <div>
-          <span>VIDAS</span>
+          <span>
+            VIDAS
+          </span>
+
           <strong>
             {vidas}
           </strong>
         </div>
+
       </section>
 
+      {/* =====================================
+          TABLERO
+      ====================================== */}
       <section
         ref={boardRef}
         className="game-board"
       >
+
+        {/* HEADER DEL TABLERO */}
         <div className="board-header">
+
           <div>
             <span>
               LABORATORIO DE ALQUIMIA
@@ -889,18 +1276,48 @@ function Game() {
             </h1>
           </div>
 
-          <button
-            type="button"
-            className="exit-button"
-            onClick={volverAlInicio}
+          <div
+            className="board-actions"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
           >
-            Salir
-          </button>
+
+            <button
+              type="button"
+              className="pause-button"
+              onClick={togglePausa}
+            >
+              {pausado
+                ? "Continuar"
+                : "Pausa"}
+            </button>
+
+            <button
+              type="button"
+              className="exit-button"
+              onClick={
+                volverAlInicio
+              }
+            >
+              Salir
+            </button>
+
+          </div>
+
         </div>
 
+        {/* =====================================
+            INGREDIENTES VOLANDO
+        ====================================== */}
         <div className="ingredients-area">
+
           {ingredientesVolando.map(
-            (ingrediente, index) => {
+            (
+              ingrediente,
+              index
+            ) => {
+
               const position =
                 POSICIONES_INGREDIENTES[
                   index %
@@ -940,12 +1357,17 @@ function Game() {
                   ingrediente={
                     ingrediente
                   }
-                  position={position}
+                  position={
+                    position
+                  }
                   onCollect={
                     handleCollectIngredient
                   }
                   isCollecting={
                     isCollecting
+                  }
+                  isPaused={
+                    pausado
                   }
                   flyDistance={
                     isCollecting
@@ -958,6 +1380,9 @@ function Game() {
                   movementScale={
                     movementScale
                   }
+                  movementDelay={
+                    `-${index * 0.55}s`
+                  }
                   movementPattern={
                     movementPattern
                   }
@@ -965,22 +1390,106 @@ function Game() {
               );
             }
           )}
+
         </div>
 
+        {/* =====================================
+            CALDERO
+        ====================================== */}
         <Cauldron
           ref={cauldronRef}
+          isReacting={
+            calderoReaccionando
+          }
+          liquidColor={
+            liquidColor
+          }
         />
 
+        {/* =====================================
+            TOAST
+        ====================================== */}
         {mensaje && (
           <div className="game-toast">
             {mensaje}
           </div>
         )}
 
+        {/* =====================================
+            FEEDBACK DEL CLIC
+        ====================================== */}
+        {feedback && (
+          <div
+            key={feedback.id}
+            className={`interaction-feedback interaction-feedback-${feedback.tipo}`}
+            style={{
+              left: `${feedback.x}px`,
+              top: `${feedback.y}px`
+            }}
+          >
+            {feedback.texto}
+          </div>
+        )}
+
+        {/* =====================================
+            PAUSA
+        ====================================== */}
+        {pausado && (
+          <div className="pause-overlay">
+
+            <div className="pause-card">
+
+              <span className="pause-label">
+                POTION PANIC
+              </span>
+
+              <h2>
+                Juego en pausa
+              </h2>
+
+              <p>
+                El laboratorio está en
+                pausa.
+              </p>
+
+              <div className="pause-actions">
+
+                <button
+                  type="button"
+                  className="resume-button"
+                  onClick={
+                    togglePausa
+                  }
+                >
+                  Continuar
+                </button>
+
+                <button
+                  type="button"
+                  className="pause-exit-button"
+                  onClick={
+                    volverAlInicio
+                  }
+                >
+                  Salir al inicio
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* =====================================
+            RECETA COMPLETADA
+        ====================================== */}
         {estadoJuego ===
           "receta-completa" && (
           <div className="game-overlay">
+
             <div className="game-result">
+
               <span className="result-label">
                 POCIÓN COMPLETADA
               </span>
@@ -992,14 +1501,21 @@ function Game() {
               <p>
                 Preparación exitosa.
               </p>
+
             </div>
+
           </div>
         )}
 
+        {/* =====================================
+            DERROTA
+        ====================================== */}
         {estadoJuego ===
           "derrota" && (
           <div className="game-overlay">
+
             <div className="game-result">
+
               <span className="result-label">
                 LABORATORIO PERDIDO
               </span>
@@ -1039,14 +1555,21 @@ function Game() {
               >
                 Intentar de nuevo
               </button>
+
             </div>
+
           </div>
         )}
 
+        {/* =====================================
+            VICTORIA FINAL
+        ====================================== */}
         {estadoJuego ===
           "victoria" && (
           <div className="game-overlay">
+
             <div className="game-result">
+
               <span className="result-label">
                 MAESTRÍA ALCANZADA
               </span>
@@ -1057,8 +1580,8 @@ function Game() {
               </h2>
 
               <p>
-                Todos los niveles fueron
-                completados.
+                Todos los niveles
+                fueron completados.
               </p>
 
               <p>
@@ -1079,9 +1602,12 @@ function Game() {
                   )
                 }
               />
+
             </div>
+
           </div>
         )}
+
       </section>
     </main>
   );

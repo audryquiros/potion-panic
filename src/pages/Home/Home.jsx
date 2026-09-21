@@ -5,25 +5,25 @@ function Home() {
   return (
     <main className="home">
       <section className="home-content">
-        <p className="home-subtitle">ALCHEMY LABORATORY</p>
+        <p className="home-subtitle">LABORATORIO DE ALQUIMIA</p>
 
         <h1>Potion Panic</h1>
 
         <p className="home-description">
-          Prepare magical potions before time runs out.
+          Prepara pociones mágicas antes de que se acabe el tiempo.
         </p>
 
         <div className="home-buttons">
           <Link to="/juego/1" className="primary-button">
-            Play
+            Jugar
           </Link>
 
           <Link to="/instrucciones" className="secondary-button">
-            Instructions
+            Instrucciones
           </Link>
 
           <Link to="/puntajes" className="secondary-button">
-            Scores
+            Puntuaciones
           </Link>
         </div>
       </section>
