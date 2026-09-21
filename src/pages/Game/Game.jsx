@@ -32,8 +32,10 @@ function Game() {
     useState(null);
 
   const [flyDistance, setFlyDistance] = useState({
-    x: 0,
-    y: 0
+    centerX: 0,
+    centerY: 0,
+    cauldronX: 0,
+    cauldronY: 0
   });
 
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,10 @@ function Game() {
       <main className="game-page">
         <div className="game-message">
           <h2>Cargando laboratorio...</h2>
-          <p>Preparando los ingredientes.</p>
+
+          <p>
+            Preparando los ingredientes.
+          </p>
         </div>
       </main>
     );
@@ -80,7 +85,9 @@ function Game() {
     return (
       <main className="game-page">
         <div className="game-message error">
-          <h2>No se pudo cargar el juego</h2>
+          <h2>
+            No se pudo cargar el juego
+          </h2>
 
           <p>{error}</p>
 
@@ -139,6 +146,27 @@ function Game() {
     }
   ];
 
+  /*
+    Mientras menor sea el número,
+    más rápido se mueve el ingrediente.
+
+    El nivel aumenta la dificultad.
+  */
+
+  const getMovementSpeed = () => {
+    const velocidades = {
+      1: 8,
+      2: 6.5,
+      3: 5,
+      4: 3.8,
+      5: 2.8
+    };
+
+    return (
+      velocidades[Number(nivel)] || 8
+    );
+  };
+
   const handleCollectIngredient = (
     ingrediente,
     event
@@ -169,10 +197,6 @@ function Game() {
     const cauldronRect =
       cauldron.getBoundingClientRect();
 
-    /*
-      Centro del ingrediente
-    */
-
     const ingredientCenterX =
       ingredientRect.left +
       ingredientRect.width / 2;
@@ -180,10 +204,6 @@ function Game() {
     const ingredientCenterY =
       ingredientRect.top +
       ingredientRect.height / 2;
-
-    /*
-      Centro visual del tablero
-    */
 
     const boardCenterX =
       boardRect.left +
@@ -193,67 +213,34 @@ function Game() {
       boardRect.top +
       boardRect.height / 2;
 
-    /*
-      Punto de entrada del caldero.
-
-      Usamos la parte superior del caldero
-      para que parezca que el ingrediente
-      cae dentro.
-    */
-
     const cauldronCenterX =
       cauldronRect.left +
       cauldronRect.width / 2;
 
     const cauldronTargetY =
-      cauldronRect.top +
-      35;
+      cauldronRect.top + 35;
 
-    /*
-      Distancia desde ingrediente
-      hasta el centro del tablero.
-    */
-
-    const centerDistanceX =
+    const centerX =
       boardCenterX -
       ingredientCenterX;
 
-    const centerDistanceY =
+    const centerY =
       boardCenterY -
       ingredientCenterY;
 
-    /*
-      Distancia desde el centro
-      del tablero hasta el caldero.
-    */
-
-    const cauldronDistanceX =
+    const cauldronX =
       cauldronCenterX -
       boardCenterX;
 
-    const cauldronDistanceY =
+    const cauldronY =
       cauldronTargetY -
       boardCenterY;
 
-    /*
-      Guardamos ambos movimientos.
-
-      La animación usará:
-
-      --center-x
-      --center-y
-
-      y después:
-
-      --cauldron-x
-      --cauldron-y
-    */
-
     setFlyDistance({
-      centerX: centerDistanceX,
-      centerY: centerDistanceY,
-      cauldronX: cauldronDistanceX,
-      cauldronY: cauldronDistanceY
+      centerX,
+      centerY,
+      cauldronX,
+      cauldronY
     });
 
     setCollectingIngredient(
@@ -262,14 +249,16 @@ function Game() {
 
     setTimeout(() => {
       setCollectingIngredient(null);
-    }, 1100);
+    }, 1200);
   };
 
   if (!recetaActual) {
     return (
       <main className="game-page">
         <div className="game-message">
-          <h2>Nivel no disponible</h2>
+          <h2>
+            Nivel no disponible
+          </h2>
 
           <p>
             No encontramos una receta
@@ -286,6 +275,9 @@ function Game() {
       </main>
     );
   }
+
+  const movementSpeed =
+    getMovementSpeed();
 
   return (
     <main className="game-page">
@@ -363,7 +355,9 @@ function Game() {
         <div className="stat-card">
           <span>Vidas</span>
 
-          <strong>3</strong>
+          <strong>
+            {recetaActual.vidas}
+          </strong>
         </div>
       </section>
 
@@ -412,15 +406,22 @@ function Game() {
                       ? flyDistance
                       : null
                   }
+                  movementSpeed={
+                    movementSpeed /
+                    ingrediente.velocidad
+                  }
+                  movementPattern={
+                    index % 6
+                  }
                 />
               );
             }
           )}
         </div>
 
-        <div ref={cauldronRef}>
-          <Cauldron />
-        </div>
+        <Cauldron
+          ref={cauldronRef}
+        />
       </section>
     </main>
   );

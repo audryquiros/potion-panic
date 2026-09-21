@@ -1,8 +1,13 @@
+import { forwardRef } from "react";
+
 import "./Cauldron.css";
 
-function Cauldron() {
+const Cauldron = forwardRef(function Cauldron(props, ref) {
   return (
-    <div className="cauldron-area">
+    <div
+      ref={ref}
+      className="cauldron-area"
+    >
       <div className="cauldron">
         <div className="cauldron-glow"></div>
 
@@ -16,6 +21,6 @@ function Cauldron() {
       </span>
     </div>
   );
-}
+});
 
 export default Cauldron;

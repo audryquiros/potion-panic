@@ -1,66 +1,43 @@
 .cauldron-area {
   position: absolute;
-
   left: 50%;
   bottom: 28px;
-
   z-index: 8;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   transform: translateX(-50%);
 }
 
 .cauldron {
   position: relative;
-
-  width: 190px;
-  height: 145px;
+  width: 240px;
+  height: 155px;
 }
 
 .cauldron-glow {
   position: absolute;
-
   left: 50%;
   bottom: 5px;
-
-  width: 180px;
-  height: 70px;
-
+  width: 225px;
+  height: 75px;
   transform: translateX(-50%);
-
   border-radius: 50%;
-
   background: rgba(155, 126, 222, 0.15);
-
   filter: blur(22px);
 }
 
 .cauldron-body {
   position: absolute;
-
   left: 50%;
   bottom: 0;
-
-  width: 170px;
-  height: 105px;
-
+  width: 215px;
+  height: 112px;
   transform: translateX(-50%);
-
   overflow: hidden;
-
   border: 2px solid #554364;
-  border-radius: 25px 25px 50px 50px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #40354b,
-      #211a29
-    );
-
+  border-radius: 28px 28px 55px 55px;
+  background: linear-gradient(145deg, #40354b, #211a29);
   box-shadow:
     inset 0 8px 15px rgba(255, 255, 255, 0.04),
     0 15px 35px rgba(0, 0, 0, 0.4);
@@ -68,38 +45,26 @@
 
 .cauldron-body::before {
   content: "";
-
   position: absolute;
-
-  top: -14px;
+  top: -15px;
   left: 50%;
-
-  width: 178px;
-  height: 34px;
-
+  width: 224px;
+  height: 36px;
   transform: translateX(-50%);
-
   border: 2px solid #5e4c70;
   border-radius: 50%;
-
   background: #17131e;
-
   z-index: 2;
 }
 
 .cauldron-liquid {
   position: absolute;
-
   top: 0;
   left: 50%;
-
-  width: 145px;
-  height: 32px;
-
+  width: 185px;
+  height: 34px;
   transform: translateX(-50%);
-
   border-radius: 50%;
-
   background:
     radial-gradient(
       circle at 35% 40%,
@@ -107,7 +72,6 @@
       #8064aa 45%,
       #4f3970 100%
     );
-
   box-shadow:
     0 0 18px rgba(155, 126, 222, 0.5),
     0 0 35px rgba(155, 126, 222, 0.2);
@@ -115,9 +79,7 @@
 
 .cauldron-label {
   margin-top: 10px;
-
   color: #8d7c9f;
-
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -133,4 +95,4 @@
   .cauldron-area {
     bottom: 18px;
   }
-}
+} 

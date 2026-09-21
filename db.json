@@ -4,7 +4,7 @@
       "id": 1,
       "nombre": "Hongo Lunar",
       "imagen": "/assets/ingredients/mushroom.png",
-      "velocidad": 2,
+      "velocidad": 1,
       "puntos": 20,
       "peligroso": false
     },
@@ -12,7 +12,7 @@
       "id": 2,
       "nombre": "Hierba Arcana",
       "imagen": "/assets/ingredients/herb.png",
-      "velocidad": 2,
+      "velocidad": 1,
       "puntos": 20,
       "peligroso": false
     },
@@ -20,7 +20,7 @@
       "id": 3,
       "nombre": "Cristal Mágico",
       "imagen": "/assets/ingredients/crystal.png",
-      "velocidad": 3,
+      "velocidad": 2,
       "puntos": 30,
       "peligroso": false
     },
@@ -28,7 +28,7 @@
       "id": 4,
       "nombre": "Flor Nocturna",
       "imagen": "/assets/ingredients/flower.png",
-      "velocidad": 2,
+      "velocidad": 1,
       "puntos": 25,
       "peligroso": false
     },
@@ -36,7 +36,7 @@
       "id": 5,
       "nombre": "Polvo Lunar",
       "imagen": "/assets/ingredients/moon-dust.png",
-      "velocidad": 3,
+      "velocidad": 2,
       "puntos": 30,
       "peligroso": false
     },
@@ -54,41 +54,51 @@
       "id": 1,
       "nombre": "Poción de Velocidad",
       "nivel": 1,
-      "tiempo": 30,
+      "tiempo": 35,
       "puntos": 100,
+      "vidas": 3,
+      "velocidad": 1,
       "ingredientes": [1, 2, 3]
     },
     {
       "id": 2,
       "nombre": "Poción de Invisibilidad",
-      "nivel": 1,
+      "nivel": 2,
       "tiempo": 30,
       "puntos": 120,
+      "vidas": 3,
+      "velocidad": 1.3,
       "ingredientes": [1, 4, 5]
     },
     {
       "id": 3,
       "nombre": "Poción de Curación",
-      "nivel": 2,
-      "tiempo": 25,
+      "nivel": 3,
+      "tiempo": 27,
       "puntos": 150,
-      "ingredientes": [2, 3, 4]
+      "vidas": 3,
+      "velocidad": 1.7,
+      "ingredientes": [2, 3, 4, 5]
     },
     {
       "id": 4,
-      "nombre": "Poción de Fuego",
-      "nivel": 2,
-      "tiempo": 25,
-      "puntos": 180,
-      "ingredientes": [3, 5]
+      "nombre": "Poción de Maestría",
+      "nivel": 4,
+      "tiempo": 24,
+      "puntos": 200,
+      "vidas": 2,
+      "velocidad": 2.2,
+      "ingredientes": [1, 3, 4, 5]
     },
     {
       "id": 5,
       "nombre": "Poción del Maestro",
-      "nivel": 3,
+      "nivel": 5,
       "tiempo": 20,
       "puntos": 250,
-      "ingredientes": [1, 3, 4, 5]
+      "vidas": 2,
+      "velocidad": 2.8,
+      "ingredientes": [1, 2, 3, 4, 5]
     }
   ],
   "puntajes": []

@@ -5,7 +5,9 @@ function Ingredient({
   position,
   onCollect,
   isCollecting,
-  flyDistance
+  flyDistance,
+  movementSpeed,
+  movementPattern
 }) {
   const handleClick = (event) => {
     if (isCollecting) {
@@ -17,7 +19,8 @@ function Ingredient({
 
   const style = {
     top: position.top,
-    left: position.left
+    left: position.left,
+    "--movement-speed": `${movementSpeed}s`
   };
 
   if (isCollecting && flyDistance) {
@@ -38,9 +41,9 @@ function Ingredient({
     <button
       type="button"
       className={`floating-ingredient ${
-        isCollecting
-          ? "ingredient-collecting"
-          : ""
+        !isCollecting
+          ? `ingredient-motion-${movementPattern}`
+          : "ingredient-collecting"
       }`}
       style={style}
       onClick={handleClick}
