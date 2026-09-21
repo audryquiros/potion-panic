@@ -501,6 +501,15 @@
       "resultado": "derrota",
       "fecha": "2026-09-21T21:03:34.334Z",
       "id": "NSriuG72ALA"
+    },
+    {
+      "nombre": "Drieech",
+      "puntos": 1670,
+      "nivel": 3,
+      "nivelesCompletados": 2,
+      "resultado": "derrota",
+      "fecha": "2026-09-21T21:16:06.484Z",
+      "id": "V00nAmM7DC4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

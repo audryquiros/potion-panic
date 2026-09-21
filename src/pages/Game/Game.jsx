@@ -245,24 +245,23 @@ function Game() {
    * 2. Cada receta dentro del nivel aumenta
    *    un poco más la velocidad.
    */
-  const movementScaleNivel =
-    {
-      1: 0.92,
-      2: 0.98,
-      3: 1.04,
-      4: 1.10,
-      5: 1.16
-    }[nivelNumero] || 0.92;
+  /*
+   * La amplitud del movimiento tambien escala de forma continua.
+   * La receta 3 de cada nivel usa exactamente la misma amplitud
+   * con la que inicia la receta 1 del siguiente nivel.
+   * Asi no hay salto visual al cambiar de nivel.
+   */
+  const movementScalePorNivel = {
+    1: [0.92, 0.95, 0.98],
+    2: [0.98, 1.01, 1.04],
+    3: [1.04, 1.07, 1.10],
+    4: [1.10, 1.13, 1.16],
+    5: [1.16, 1.20, 1.24]
+  };
 
-  const movementScaleReceta =
-    [1, 1.12, 1.24][indiceReceta] ||
-    1;
-
-  const movementScale = Math.min(
-    movementScaleNivel *
-      movementScaleReceta,
-    1.25
-  );
+  const movementScale =
+    movementScalePorNivel[nivelNumero]?.[indiceReceta] ||
+    movementScalePorNivel[1][0];
 
   const movementSpeedNivel =
     {
@@ -289,6 +288,11 @@ function Game() {
       4: 3,
       5: 2.7
     }[nivelNumero] || movementSpeedNivel;
+
+  /*
+   * La velocidad tambien es continua: receta 3 del nivel N
+   * y receta 1 del nivel N+1 tienen exactamente el mismo valor.
+   */
 
   const movementSpeed =
     indiceReceta === 0
