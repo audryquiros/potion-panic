@@ -75,7 +75,7 @@
     {
       "id": "9",
       "nombre": "Baya Ígnea",
-      "imagen": "/assets/ingredients/fire-berry.svg",
+      "imagen": "/assets/ingredients/baya_ignea.png",
       "velocidad": 1.5,
       "puntos": 0,
       "peligroso": false,
@@ -84,7 +84,7 @@
     {
       "id": "10",
       "nombre": "Semilla Estelar",
-      "imagen": "/assets/ingredients/star-seed.svg",
+      "imagen": "/assets/ingredients/semilla_estelar.png",
       "velocidad": 1.8,
       "puntos": 0,
       "peligroso": false,
@@ -93,7 +93,7 @@
     {
       "id": "11",
       "nombre": "Ojo de Cristal",
-      "imagen": "/assets/ingredients/crystal-eye.svg",
+      "imagen": "/assets/ingredients/ojo_de_cristal.png",
       "velocidad": 2.1,
       "puntos": 0,
       "peligroso": false,
@@ -102,7 +102,7 @@
     {
       "id": "12",
       "nombre": "Pluma Espectral",
-      "imagen": "/assets/ingredients/spectral-feather.svg",
+      "imagen": "/assets/ingredients/pluma_espectral.png",
       "velocidad": 2.4,
       "puntos": 0,
       "peligroso": false,
@@ -111,7 +111,7 @@
     {
       "id": "13",
       "nombre": "Piedra Rúnica",
-      "imagen": "/assets/ingredients/rune-stone.svg",
+      "imagen": "/assets/ingredients/piedra_runica.png",
       "velocidad": 1.5,
       "puntos": 0,
       "peligroso": false,
@@ -120,7 +120,7 @@
     {
       "id": "14",
       "nombre": "Escama de Sirena",
-      "imagen": "/assets/ingredients/mermaid-scale.svg",
+      "imagen": "/assets/ingredients/escama_de_sirena.png",
       "velocidad": 1.8,
       "puntos": 0,
       "peligroso": false,
@@ -129,7 +129,7 @@
     {
       "id": "15",
       "nombre": "Fruto Sombrío",
-      "imagen": "/assets/ingredients/shadow-fruit.svg",
+      "imagen": "/assets/ingredients/fruto_sombrio.png",
       "velocidad": 2.1,
       "puntos": 0,
       "peligroso": false,
@@ -138,7 +138,7 @@
     {
       "id": "16",
       "nombre": "Perla Lunar",
-      "imagen": "/assets/ingredients/moon-pearl.svg",
+      "imagen": "/assets/ingredients/perla_lunar.png",
       "velocidad": 2.4,
       "puntos": 0,
       "peligroso": false,
@@ -147,7 +147,7 @@
     {
       "id": "17",
       "nombre": "Hoja Carmesí",
-      "imagen": "/assets/ingredients/crimson-leaf.svg",
+      "imagen": "/assets/ingredients/hoja_carmesi.png",
       "velocidad": 1.5,
       "puntos": 0,
       "peligroso": false,
@@ -156,7 +156,7 @@
     {
       "id": "18",
       "nombre": "Gota de Aurora",
-      "imagen": "/assets/ingredients/aurora-drop.svg",
+      "imagen": "/assets/ingredients/gota_de_aurora.png",
       "velocidad": 1.8,
       "puntos": 0,
       "peligroso": false,
@@ -165,7 +165,7 @@
     {
       "id": "19",
       "nombre": "Fragmento de Obsidiana",
-      "imagen": "/assets/ingredients/obsidian-shard.svg",
+      "imagen": "/assets/ingredients/fragmento_de_obsidiana.png",
       "velocidad": 2.1,
       "puntos": 0,
       "peligroso": false,
@@ -174,7 +174,7 @@
     {
       "id": "20",
       "nombre": "Raíz Dorada",
-      "imagen": "/assets/ingredients/golden-root.svg",
+      "imagen": "/assets/ingredients/raiz_dorada.png",
       "velocidad": 2.4,
       "puntos": 0,
       "peligroso": false,
@@ -183,7 +183,7 @@
     {
       "id": "21",
       "nombre": "Pétalo Astral",
-      "imagen": "/assets/ingredients/astral-petal.svg",
+      "imagen": "/assets/ingredients/petalo_astral.png",
       "velocidad": 1.5,
       "puntos": 0,
       "peligroso": false,
@@ -192,7 +192,7 @@
     {
       "id": "22",
       "nombre": "Arena de Cometa",
-      "imagen": "/assets/ingredients/comet-dust.svg",
+      "imagen": "/assets/ingredients/arena_de_cometa.png",
       "velocidad": 1.8,
       "puntos": 0,
       "peligroso": false,
@@ -201,7 +201,7 @@
     {
       "id": "23",
       "nombre": "Campana Arcana",
-      "imagen": "/assets/ingredients/arcane-bell.svg",
+      "imagen": "/assets/ingredients/campana_arcana.png",
       "velocidad": 2.1,
       "puntos": 0,
       "peligroso": false,
@@ -210,7 +210,7 @@
     {
       "id": "24",
       "nombre": "Corazón de Musgo",
-      "imagen": "/assets/ingredients/moss-heart.svg",
+      "imagen": "/assets/ingredients/corazon_de_musgo.png",
       "velocidad": 2.4,
       "puntos": 0,
       "peligroso": false,
@@ -219,7 +219,7 @@
     {
       "id": "25",
       "nombre": "Hueso de Dragón",
-      "imagen": "/assets/ingredients/dragon-bone.svg",
+      "imagen": "/assets/ingredients/hueso_de_dragon.png",
       "velocidad": 1.5,
       "puntos": 0,
       "peligroso": false,
@@ -228,7 +228,7 @@
     {
       "id": "26",
       "nombre": "Vela Fantasma",
-      "imagen": "/assets/ingredients/ghost-candle.svg",
+      "imagen": "/assets/ingredients/vela_fantasma.png",
       "velocidad": 1.8,
       "puntos": 0,
       "peligroso": false,
@@ -237,7 +237,7 @@
     {
       "id": "27",
       "nombre": "Rosa de Hielo",
-      "imagen": "/assets/ingredients/ice-rose.svg",
+      "imagen": "/assets/ingredients/rosa_de_hielo.png",
       "velocidad": 2.1,
       "puntos": 0,
       "peligroso": false,
@@ -246,7 +246,7 @@
     {
       "id": "28",
       "nombre": "Frasco de Éter",
-      "imagen": "/assets/ingredients/ether-vial.svg",
+      "imagen": "/assets/ingredients/frasco_de_eter.png",
       "velocidad": 2.4,
       "puntos": 0,
       "peligroso": false,
@@ -255,7 +255,7 @@
     {
       "id": "29",
       "nombre": "Veneno de Araña",
-      "imagen": "/assets/ingredients/poison.png",
+      "imagen": "/assets/ingredients/veneno_de_arana.png",
       "velocidad": 3.2,
       "puntos": 0,
       "peligroso": true,
@@ -264,7 +264,7 @@
     {
       "id": "30",
       "nombre": "Elixir Tóxico",
-      "imagen": "/assets/ingredients/poison.png",
+      "imagen": "/assets/ingredients/elixir_toxico.png",
       "velocidad": 3.4,
       "puntos": 0,
       "peligroso": true,
@@ -277,7 +277,7 @@
       "nivel": 1,
       "orden": 1,
       "nombre": "Poción de Velocidad",
-      "imagen": "/assets/recipes/speed-potion.png",
+      "imagen": "/assets/recipes/pocion-velocidad.png",
       "ingredientes": [
         1,
         2,
@@ -289,7 +289,7 @@
       "nivel": 1,
       "orden": 2,
       "nombre": "Poción de Energía",
-      "imagen": "/assets/recipes/energy-potion.png",
+      "imagen": "/assets/recipes/pocion-energia.png",
       "ingredientes": [
         2,
         4,
@@ -301,7 +301,7 @@
       "nivel": 1,
       "orden": 3,
       "nombre": "Poción de Claridad",
-      "imagen": "/assets/recipes/clarity-potion.png",
+      "imagen": "/assets/recipes/pocion-claridad.png",
       "ingredientes": [
         1,
         4,
@@ -313,7 +313,7 @@
       "nivel": 2,
       "orden": 1,
       "nombre": "Poción de Invisibilidad",
-      "imagen": "/assets/recipes/invisibility-potion.png",
+      "imagen": "/assets/recipes/pocion-invisibilidad.png",
       "ingredientes": [
         1,
         3,
@@ -326,7 +326,7 @@
       "nivel": 2,
       "orden": 2,
       "nombre": "Poción de Protección",
-      "imagen": "/assets/recipes/protection-potion.png",
+      "imagen": "/assets/recipes/pocion-proteccion.png",
       "ingredientes": [
         2,
         3,
@@ -339,7 +339,7 @@
       "nivel": 2,
       "orden": 3,
       "nombre": "Poción de Agilidad",
-      "imagen": "/assets/recipes/agility-potion.png",
+      "imagen": "/assets/recipes/pocion-agilidad.png",
       "ingredientes": [
         1,
         2,
@@ -352,7 +352,7 @@
       "nivel": 3,
       "orden": 1,
       "nombre": "Poción de Curación",
-      "imagen": "/assets/recipes/healing-potion.png",
+      "imagen": "/assets/recipes/pocion-curacion.png",
       "ingredientes": [
         1,
         2,
@@ -366,7 +366,7 @@
       "nivel": 3,
       "orden": 2,
       "nombre": "Poción de Resistencia",
-      "imagen": "/assets/recipes/resistance-potion.png",
+      "imagen": "/assets/recipes/pocion-resistencia.png",
       "ingredientes": [
         2,
         3,
@@ -380,7 +380,7 @@
       "nivel": 3,
       "orden": 3,
       "nombre": "Poción de Visión Nocturna",
-      "imagen": "/assets/recipes/night-vision-potion.png",
+      "imagen": "/assets/recipes/pocion-vision-nocturna.png",
       "ingredientes": [
         1,
         4,
@@ -394,7 +394,7 @@
       "nivel": 4,
       "orden": 1,
       "nombre": "Poción de Maestría",
-      "imagen": "/assets/recipes/mastery-potion.png",
+      "imagen": "/assets/recipes/pocion-maestria.png",
       "ingredientes": [
         1,
         2,
@@ -409,7 +409,7 @@
       "nivel": 4,
       "orden": 2,
       "nombre": "Poción de Poder Arcano",
-      "imagen": "/assets/recipes/arcane-power-potion.png",
+      "imagen": "/assets/recipes/pocion-poder-arcano.png",
       "ingredientes": [
         1,
         2,
@@ -424,7 +424,7 @@
       "nivel": 4,
       "orden": 3,
       "nombre": "Poción del Guardián",
-      "imagen": "/assets/recipes/guardian-potion.png",
+      "imagen": "/assets/recipes/pocion-del-guardian.png",
       "ingredientes": [
         1,
         3,
@@ -439,7 +439,7 @@
       "nivel": 5,
       "orden": 1,
       "nombre": "Elixir Supremo",
-      "imagen": "/assets/recipes/supreme-elixir.png",
+      "imagen": "/assets/recipes/elixir-supremo.png",
       "ingredientes": [
         1,
         2,
@@ -455,7 +455,7 @@
       "nivel": 5,
       "orden": 2,
       "nombre": "Poción del Archimago",
-      "imagen": "/assets/recipes/archmage-potion.png",
+      "imagen": "/assets/recipes/pocion-del-archimago.png",
       "ingredientes": [
         1,
         2,
@@ -471,7 +471,7 @@
       "nivel": 5,
       "orden": 3,
       "nombre": "Elixir de la Eternidad",
-      "imagen": "/assets/recipes/eternity-elixir.png",
+      "imagen": "/assets/recipes/elixir-de-la-eternidad.png",
       "ingredientes": [
         1,
         2,
