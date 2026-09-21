@@ -1,67 +1,97 @@
 .floating-ingredient {
   position: absolute;
+
   z-index: 5;
-  width: 62px;
-  height: 62px;
+
+  width: 76px;
+  height: 76px;
+
   padding: 0;
+
   border: 0;
+
   background: transparent;
+
   cursor: pointer;
+
+  appearance: none;
+
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .floating-ingredient:hover {
-  filter: brightness(1.15);
+  filter: brightness(1.12);
 }
 
 .floating-ingredient:focus-visible {
   outline: 2px solid #9b7ede;
-  outline-offset: 4px;
+  outline-offset: 5px;
+}
+
+.floating-ingredient:disabled {
+  opacity: 1;
 }
 
 .ingredient-flight {
   display: block;
+
   width: 100%;
   height: 100%;
 }
 
 .ingredient-visual {
-  width: 62px;
-  height: 62px;
+  width: 76px;
+  height: 76px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 1px solid #6b5c80;
-  border-radius: 18px;
+  position: relative;
+}
 
-  background: #2b2436;
-  color: #d8c8f2;
+.ingredient-visual img {
+  display: block;
 
-  font-size: 1.4rem;
-  font-weight: 700;
+  width: 100%;
+  height: 100%;
 
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.25),
-    0 0 0 rgba(155, 126, 222, 0);
+  object-fit: contain;
+
+  user-select: none;
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0 8px 12px
+      rgba(0, 0, 0, 0.35)
+    );
 
   transition:
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
-.floating-ingredient:hover .ingredient-visual {
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    0 0 18px rgba(155, 126, 222, 0.25);
+.floating-ingredient:hover
+.ingredient-visual img {
+  filter:
+    drop-shadow(
+      0 10px 16px
+      rgba(0, 0, 0, 0.4)
+    )
+    drop-shadow(
+      0 0 10px
+      rgba(155, 126, 222, 0.3)
+    );
+
+  transform: scale(1.06);
 }
 
-
-/* =====================================================
-   MOVIMIENTO DE LOS INGREDIENTES
-   Cada ingrediente utiliza una zona diferente
-   para reducir cruces y superposiciones.
-   ===================================================== */
+/* =========================================
+   MOVIMIENTO
+========================================= */
 
 .ingredient-motion-0 {
   animation:
@@ -111,11 +141,25 @@
     infinite alternate;
 }
 
+.ingredient-motion-6 {
+  animation:
+    ingredientFloat6
+    var(--movement-speed)
+    ease-in-out
+    infinite alternate;
+}
 
-/* =====================================================
-   TRAYECTORIA 1
-   Zona superior izquierda
-   ===================================================== */
+.ingredient-motion-7 {
+  animation:
+    ingredientFloat7
+    var(--movement-speed)
+    ease-in-out
+    infinite alternate;
+}
+
+/* =========================================
+   PATRONES DE MOVIMIENTO
+========================================= */
 
 @keyframes ingredientFloat0 {
   0% {
@@ -123,19 +167,21 @@
   }
 
   50% {
-    transform: translate(45px, 20px);
+    transform:
+      translate(
+        calc(70px * var(--movement-scale)),
+        calc(35px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(20px, 65px);
+    transform:
+      translate(
+        calc(30px * var(--movement-scale)),
+        calc(75px * var(--movement-scale))
+      );
   }
 }
-
-
-/* =====================================================
-   TRAYECTORIA 2
-   Zona central izquierda
-   ===================================================== */
 
 @keyframes ingredientFloat1 {
   0% {
@@ -143,19 +189,21 @@
   }
 
   50% {
-    transform: translate(-45px, 25px);
+    transform:
+      translate(
+        calc(-65px * var(--movement-scale)),
+        calc(35px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(-15px, 70px);
+    transform:
+      translate(
+        calc(-25px * var(--movement-scale)),
+        calc(70px * var(--movement-scale))
+      );
   }
 }
-
-
-/* =====================================================
-   TRAYECTORIA 3
-   Zona superior derecha
-   ===================================================== */
 
 @keyframes ingredientFloat2 {
   0% {
@@ -163,19 +211,21 @@
   }
 
   50% {
-    transform: translate(-45px, 25px);
+    transform:
+      translate(
+        calc(-65px * var(--movement-scale)),
+        calc(30px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(-65px, 70px);
+    transform:
+      translate(
+        calc(-80px * var(--movement-scale)),
+        calc(70px * var(--movement-scale))
+      );
   }
 }
-
-
-/* =====================================================
-   TRAYECTORIA 4
-   Zona media izquierda
-   ===================================================== */
 
 @keyframes ingredientFloat3 {
   0% {
@@ -183,19 +233,21 @@
   }
 
   50% {
-    transform: translate(45px, -25px);
+    transform:
+      translate(
+        calc(70px * var(--movement-scale)),
+        calc(-35px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(30px, -65px);
+    transform:
+      translate(
+        calc(40px * var(--movement-scale)),
+        calc(-75px * var(--movement-scale))
+      );
   }
 }
-
-
-/* =====================================================
-   TRAYECTORIA 5
-   Zona media derecha
-   ===================================================== */
 
 @keyframes ingredientFloat4 {
   0% {
@@ -203,19 +255,21 @@
   }
 
   50% {
-    transform: translate(-40px, -25px);
+    transform:
+      translate(
+        calc(-70px * var(--movement-scale)),
+        calc(-35px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(-20px, -70px);
+    transform:
+      translate(
+        calc(-35px * var(--movement-scale)),
+        calc(-80px * var(--movement-scale))
+      );
   }
 }
-
-
-/* =====================================================
-   TRAYECTORIA 6
-   Zona inferior / central
-   ===================================================== */
 
 @keyframes ingredientFloat5 {
   0% {
@@ -223,96 +277,151 @@
   }
 
   50% {
-    transform: translate(35px, 25px);
+    transform:
+      translate(
+        calc(65px * var(--movement-scale)),
+        calc(40px * var(--movement-scale))
+      );
   }
 
   100% {
-    transform: translate(15px, 65px);
+    transform:
+      translate(
+        calc(30px * var(--movement-scale)),
+        calc(80px * var(--movement-scale))
+      );
   }
 }
 
+@keyframes ingredientFloat6 {
+  0% {
+    transform: translate(0, 0);
+  }
 
-/* =====================================================
-   RECOLECCIÓN
-   ===================================================== */
+  50% {
+    transform:
+      translate(
+        calc(-75px * var(--movement-scale)),
+        calc(45px * var(--movement-scale))
+      );
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(55px * var(--movement-scale)),
+        calc(-60px * var(--movement-scale))
+      );
+  }
+}
+
+@keyframes ingredientFloat7 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform:
+      translate(
+        calc(70px * var(--movement-scale)),
+        calc(-40px * var(--movement-scale))
+      );
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-60px * var(--movement-scale)),
+        calc(65px * var(--movement-scale))
+      );
+  }
+}
+
+/* =========================================
+   INGREDIENTE QUE VA HACIA EL CALDERO
+========================================= */
 
 .ingredient-collecting {
-  z-index: 100;
+  z-index: 30;
+
   pointer-events: none;
+
   cursor: default;
 
-  /*
-   Detenemos el movimiento normal.
-   El vuelo se controla desde
-   .ingredient-flight.
-  */
   animation: none;
 }
 
-.ingredient-collecting .ingredient-flight {
+.ingredient-collecting
+.ingredient-flight {
   display: block;
 
   animation:
     ingredientMove
     1.2s
-    cubic-bezier(0.45, 0, 0.25, 1)
+    cubic-bezier(
+      0.45,
+      0,
+      0.25,
+      1
+    )
     forwards;
 
-  will-change: transform, opacity;
+  will-change:
+    transform,
+    opacity;
 }
 
-.ingredient-collecting .ingredient-visual {
+.ingredient-collecting
+.ingredient-visual img {
   animation:
     ingredientShrink
     1.2s
     ease-in-out
     forwards;
 
-  box-shadow:
-    0 0 20px rgba(155, 126, 222, 0.6),
-    0 0 40px rgba(155, 126, 222, 0.3);
+  filter:
+    drop-shadow(
+      0 0 14px
+      rgba(155, 126, 222, 0.65)
+    )
+    drop-shadow(
+      0 0 28px
+      rgba(155, 126, 222, 0.3)
+    );
 
-  will-change: transform;
+  will-change:
+    transform,
+    filter;
 }
-
-
-/* =====================================================
-   VUELO HACIA EL CENTRO Y DESPUÉS AL CALDERO
-   ===================================================== */
 
 @keyframes ingredientMove {
   0% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
+
     opacity: 1;
   }
 
-  /*
-   Primero llega al centro.
-  */
   45% {
     transform:
       translate(
         var(--center-x),
         var(--center-y)
       );
+
     opacity: 1;
   }
 
-  /*
-   Pequeña pausa en el centro.
-  */
   55% {
     transform:
       translate(
         var(--center-x),
         var(--center-y)
       );
+
     opacity: 1;
   }
 
-  /*
-   Finalmente baja hacia el caldero.
-  */
   100% {
     transform:
       translate(
@@ -325,14 +434,10 @@
           var(--cauldron-y)
         )
       );
+
     opacity: 0;
   }
 }
-
-
-/* =====================================================
-   REDUCCIÓN DEL INGREDIENTE
-   ===================================================== */
 
 @keyframes ingredientShrink {
   0% {
@@ -360,58 +465,30 @@
   }
 }
 
-.ingredient-motion-6 {
-  animation:
-    ingredientFloat6
-    var(--movement-speed)
-    ease-in-out
-    infinite alternate;
-}
-
-.ingredient-motion-7 {
-  animation:
-    ingredientFloat7
-    var(--movement-speed)
-    ease-in-out
-    infinite alternate;
-}
-
-@keyframes ingredientFloat6 {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(-110px, 65px);
-  }
-
-  100% {
-    transform: translate(70px, -80px);
-  }
-}
-
-@keyframes ingredientFloat7 {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(100px, -65px);
-  }
-
-  100% {
-    transform: translate(-80px, 90px);
-  }
-}
-
-/* =====================================================
+/* =========================================
    RESPONSIVE
-   ===================================================== */
+========================================= */
 
-@media (max-width: 550px) {
-  .floating-ingredient,
+@media (max-width: 700px) {
+  .floating-ingredient {
+    width: 64px;
+    height: 64px;
+  }
+
   .ingredient-visual {
-    width: 52px;
-    height: 52px;
+    width: 64px;
+    height: 64px;
+  }
+}
+
+@media (max-width: 500px) {
+  .floating-ingredient {
+    width: 56px;
+    height: 56px;
+  }
+
+  .ingredient-visual {
+    width: 56px;
+    height: 56px;
   }
 }

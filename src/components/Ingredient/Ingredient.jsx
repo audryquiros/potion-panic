@@ -7,6 +7,7 @@ function Ingredient({
   isCollecting,
   flyDistance,
   movementSpeed,
+  movementScale = 1,
   movementPattern
 }) {
   const handleClick = (event) => {
@@ -14,22 +15,18 @@ function Ingredient({
       return;
     }
 
-    onCollect(
-      ingrediente,
-      event
-    );
+    onCollect(ingrediente, event);
   };
 
   const style = {
     top: position.top,
     left: position.left,
-    "--movement-speed": `${movementSpeed}s`
+
+    "--movement-speed": `${movementSpeed}s`,
+    "--movement-scale": movementScale
   };
 
-  if (
-    isCollecting &&
-    flyDistance
-  ) {
+  if (isCollecting && flyDistance) {
     style["--center-x"] =
       `${flyDistance.centerX}px`;
 
@@ -54,11 +51,16 @@ function Ingredient({
       style={style}
       onClick={handleClick}
       title={ingrediente.nombre}
+      aria-label={`Seleccionar ${ingrediente.nombre}`}
       disabled={isCollecting}
     >
       <span className="ingredient-flight">
         <span className="ingredient-visual">
-          {ingrediente.nombre.charAt(0)}
+          <img
+            src={ingrediente.imagen}
+            alt={ingrediente.nombre}
+            draggable="false"
+          />
         </span>
       </span>
     </button>
